@@ -3,6 +3,8 @@
 import { SiteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import { ThemeToggle } from "../ThemeToggle";
+
+import { DropDownMenu } from "../features/DropDownMenu";
 import { Typography } from "../ui/Typography";
 
 export function Header() {
@@ -14,9 +16,9 @@ export function Header() {
             {SiteConfig.title}
           </Typography>
         </div>
-
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
+            <DropDownMenu />
             <ThemeToggle />
           </nav>
         </div>
