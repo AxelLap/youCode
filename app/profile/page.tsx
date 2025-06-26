@@ -1,5 +1,5 @@
 import { LogOutBtn } from "@/components/features/LogOutBtn";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,7 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Link from "next/link";
 import { getAuthSession } from "../../src/lib/auth";
+import { cn } from "../../src/lib/utils";
 import Error from "./error";
 
 export default async function ProfilePage() {
@@ -39,12 +41,24 @@ export default async function ProfilePage() {
         </CardHeader>
         <div className="w-full border-b borderwhite p-4"></div>
         <CardContent className="flex flex-col gap-4 w-2/3 mx-auto">
-          <Button variant="outline" className="cursor-pointer">
+          <Link
+            href="/admin"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "cursor-pointer"
+            )}
+          >
             Admin
-          </Button>
-          <Button variant="outline" className="cursor-pointer">
+          </Link>
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "cursor-pointer"
+            )}
+          >
             Settings
-          </Button>
+          </Link>
           <LogOutBtn isInProfilePage={true} />
         </CardContent>
         <CardFooter></CardFooter>
