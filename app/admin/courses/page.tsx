@@ -1,10 +1,5 @@
 import { NewCourseBtn } from "@/components/features/NewCourseBtn";
-import {
-  Layout,
-  LayoutContent,
-  LayoutHeader,
-  LayoutTitle,
-} from "@/components/layout/Layout";
+import { Layout, LayoutContent } from "@/components/layout/Layout";
 import {
   Table,
   TableBody,
@@ -15,6 +10,7 @@ import {
 } from "@/components/ui/table";
 import { getRequiredAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
 export default async function adminCoursesPage() {
   const session = await getRequiredAuthSession();
@@ -25,14 +21,12 @@ export default async function adminCoursesPage() {
     },
   });
 
-  console.log(courses);
-
   return (
     <Layout>
-      <LayoutHeader>
-        <LayoutTitle>My Courses</LayoutTitle>
+      <div className="w-full flex justify-between items-center p-4">
+        <h2 className="w-fit text-2xl">My Courses</h2>
         <NewCourseBtn />
-      </LayoutHeader>
+      </div>
       <LayoutContent>
         <Table className="w-full">
           <TableHeader>
@@ -46,8 +40,10 @@ export default async function adminCoursesPage() {
           <TableBody>
             {session &&
               courses.map((c) => (
-                <TableRow>
-                  <TableCell>{c.name}</TableCell>
+                <TableRow className="cursor-pointer mt-2" key={c.id}>
+                  <TableCell>
+                    <Link href={`/admin/courses/${c.id}`}>{c.name}</Link>
+                  </TableCell>
                   <TableCell>
                     <img
                       height={100}

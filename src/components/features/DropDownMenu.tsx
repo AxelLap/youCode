@@ -31,6 +31,8 @@ import { LoggedInBtn } from "./LoggedInBtn";
 export const DropDownMenu = () => {
   const { data: session } = useSession();
 
+  console.log(session);
+
   return (
     <DropdownMenu>
       <AlertDialog>

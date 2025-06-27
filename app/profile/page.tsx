@@ -21,7 +21,7 @@ export default async function ProfilePage() {
 
   return (
     session && (
-      <Card className="m-2 p-4">
+      <Card className="w-lg m-auto mt-4">
         <CardHeader className="flex items-center justify-center gap-2 mt-5 px-15">
           <img
             width={60}
