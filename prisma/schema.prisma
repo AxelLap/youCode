@@ -74,7 +74,7 @@ model Course {
   creatorId    String
   state        CourseState @default(DRAFT)
 
-  creator User           @relation(fields: [creatorId], references: [id])
+  creator User           @relation( fields: [creatorId], references: [id])
   lessons Lesson[]
   users   CourseOnUser[]
 }

@@ -1,3 +1,5 @@
+import { PaginationBtn } from "@/components/features/PaginationButn";
+import { UserAvatar } from "@/components/features/UserAvatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -9,40 +11,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getRequiredAuthSession } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import Error from "../error";
+import { getAdminCourse } from "./admin-course.query";
 
 export default async function CoursePage({
   params,
+  searchParams,
 }: {
   params: {
     courseId: string;
   };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
+  const page = Number(searchParams.page ?? 0);
+
   const session = await getRequiredAuthSession();
 
-  const course = await prisma.course.findUnique({
-    where: {
-      creatorId: session.user.id,
-      id: params.courseId,
-    },
-  });
-
-  const users = await prisma.courseOnUser.findMany({
-    where: {
-      courseId: params.courseId,
-    },
-    include: {
-      user: true, // 👈 on inclut la relation vers la table User
-    },
-  });
-
-  const lessons = await prisma.lesson.findMany({
-    where: {
-      courseId: params.courseId,
-    },
+  const course = await getAdminCourse({
+    courseId: params.courseId,
+    userId: session.user.id,
+    page: page,
   });
 
   if (!course) {
@@ -55,7 +45,7 @@ export default async function CoursePage({
         <h2 className="w-fit text-2xl">{course.name}</h2>
       </div>
       <div className="w-full flex gap-2">
-        <div className="flex gap-4 w-full p-4 justify-center">
+        <div className="flex gap-4 w-full p-4 justify-center md:flex-row flex-col">
           <Card className="w-full flex flex-col">
             <CardHeader>
               <CardTitle>Users</CardTitle>
@@ -71,17 +61,13 @@ export default async function CoursePage({
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {users.length !== 0 ? (
-                    users.map((entry) => (
-                      <TableRow key={entry.id}>
+                  {course._count?.users !== 0 ? (
+                    course.users?.map((couseUser) => (
+                      <TableRow key={couseUser.id}>
                         <TableCell>
-                          <img
-                            src={entry.user.image ?? ""}
-                            alt=""
-                            className="w-8 h-8 rounded-full"
-                          />
+                          <UserAvatar imageUrl={couseUser.image} />
                         </TableCell>
-                        <TableCell>{entry.user.name}</TableCell>
+                        <TableCell>{couseUser.name}</TableCell>
                         <TableCell>Active</TableCell>
                         <TableCell className="text-right">
                           <Button variant="outline">
@@ -101,9 +87,14 @@ export default async function CoursePage({
                   )}
                 </TableBody>
               </Table>
+              <PaginationBtn
+                baseUrl={`/admin/courses/${course.id}`}
+                totalUsers={course?._count?.users ?? 0}
+                page={page}
+              />
             </CardContent>
           </Card>
-          <Card className="w-1/3 flex flex-col">
+          <Card className="md:w-1/3 flex flex-col w-fit m-auto">
             <CardHeader className="flex items-center p-4">
               <img
                 width={50}
@@ -118,9 +109,9 @@ export default async function CoursePage({
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
               <div className="flex gap-4 items-center p-2">
-                <div className="flex flex-col gap4 w-1/2">
-                  <span>{users.length} users</span>
-                  <span>{lessons.length} lessons</span>
+                <div className="flex flex-col gap4 w-2/3">
+                  <span>{course._count?.users} users</span>
+                  <span>{course._count?.lessons} lessons</span>
                 </div>
 
                 <span
@@ -130,7 +121,7 @@ export default async function CoursePage({
                         ? { variant: "destructive" }
                         : { variant: "outline" }
                     ),
-                    "w-1/2"
+                    "w-1/3"
                   )}
                 >
                   {course.state}

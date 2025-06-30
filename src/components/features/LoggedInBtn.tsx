@@ -1,6 +1,7 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "../../lib/utils";
+import { UserAvatar } from "./UserAvatar";
 
 type LoggedInBtnProps = {
   userSession: {
@@ -19,13 +20,8 @@ export const LoggedInBtn = ({ userSession }: LoggedInBtnProps) => {
         "flex gap-2 items-center cursor-pointer"
       )}
     >
-      <img
-        width={30}
-        height={30}
-        className="rounded-full"
-        src={userSession.image ?? "/default.jpg"}
-        alt="logged in profile picture"
-      />
+      <UserAvatar imageUrl={userSession.image} />
+
       <span>{userSession.name ?? "Utilisateur"}</span>
     </div>
   );
