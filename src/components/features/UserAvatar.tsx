@@ -7,7 +7,7 @@ type UserAvatarProps = {
 
 export const UserAvatar = ({ imageUrl }: UserAvatarProps) => {
   return (
-    <Avatar className="w-[30px] h-[30px] rouded-full bg-blue-500">
+    <Avatar className="w-[30px] h-[30px] rouded-full">
       {imageUrl && <AvatarImage src={imageUrl} />}
       <AvatarFallback>
         <User />

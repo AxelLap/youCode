@@ -13,6 +13,7 @@ import {
 import { getRequiredAuthSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
+import Link from "next/link";
 import Error from "../error";
 import { getAdminCourse } from "./admin-course.query";
 
@@ -130,9 +131,15 @@ export default async function CoursePage({
               <Button className="p-2 w-2/3 m-auto" variant="outline">
                 Edit
               </Button>
-              <Button className="p-2 w-2/3 m-auto" variant="outline">
+              <Link
+                href={`/admin/courses/${params.courseId}/lessons`}
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "p-2 w-2/3 m-auto"
+                )}
+              >
                 Edit Lessons
-              </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

@@ -27,13 +27,12 @@ export default async function adminCoursesPage() {
         <NewCourseBtn />
       </div>
       <LayoutContent>
-        <Table className="w-full">
+        <Table className="w-3/4 m-auto">
           <TableHeader>
             <TableRow>
-              <TableHead className="m-auto">Name</TableHead>
-              <TableHead className="m-auto">Image</TableHead>
-              <TableHead className="m-auto">state</TableHead>
-              <TableHead className="m-auto">Presentation</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Image</TableHead>
+              <TableHead>state</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

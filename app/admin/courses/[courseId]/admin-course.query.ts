@@ -59,3 +59,28 @@ export async function getAdminCourse({
     users,
   };
 }
+
+export async function getLessons(courseId: string) {
+  const courseWithLessons = await prisma.course.findUnique({
+    where: { id: courseId },
+    select: {
+      name: true,
+      lessons: {
+        select: {
+          id: true,
+          name: true,
+          state: true,
+        },
+      },
+    },
+  });
+
+  if (!courseWithLessons) {
+    throw new Error("Course not found");
+  }
+
+  return {
+    course: courseWithLessons.name,
+    lessons: courseWithLessons.lessons,
+  };
+}

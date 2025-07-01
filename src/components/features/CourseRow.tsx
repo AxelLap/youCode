@@ -2,6 +2,7 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { CourseState } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { UserAvatar } from "./UserAvatar";
 
 type CourseRowProps = {
   course: {
@@ -19,7 +20,7 @@ export const CourseRow = ({ course }: CourseRowProps) => {
   const router = useRouter();
   return (
     <TableRow
-      className="cursor-pointer mt-2 h-[60px] max-h-[60px]"
+      className="cursor-pointer mt-2 h-[60px] max-h-[60px] w-full"
       key={course.id}
       onClick={() => {
         router.push(`/admin/courses/${course.id}`);
@@ -29,14 +30,9 @@ export const CourseRow = ({ course }: CourseRowProps) => {
         <h3>{course.name}</h3>
       </TableCell>
       <TableCell>
-        <img
-          alt="course illustration"
-          className="rounded-md object-contain h-[60px] w-[100px] border border-white"
-          src={course.image}
-        />
+        <UserAvatar imageUrl={course.image} />
       </TableCell>
       <TableCell>{course.state}</TableCell>
-      <TableCell>{course.presentation}</TableCell>
     </TableRow>
   );
 };
