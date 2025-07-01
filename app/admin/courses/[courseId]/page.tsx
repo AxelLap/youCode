@@ -1,5 +1,7 @@
 import { PaginationBtn } from "@/components/features/PaginationButn";
 import { UserAvatar } from "@/components/features/UserAvatar";
+import { Layout } from "@/components/layout/Layout";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -41,13 +43,11 @@ export default async function CoursePage({
   }
 
   return (
-    <div className=" flex-wrap w-5/6 flex gap-4 m-auto px-10 mt-4">
-      <div className="w-full flex justify-between items-center p-4">
-        <h2 className="w-fit text-2xl">{course.name}</h2>
-      </div>
+    <Layout>
+      <PageHeader pageName={`Course • ${course.name}`} />
       <div className="w-full flex gap-2">
         <div className="flex gap-4 w-full p-4 justify-center md:flex-row flex-col">
-          <Card className="w-full flex flex-col">
+          <Card className="w-[90%] flex flex-col m-auto">
             <CardHeader>
               <CardTitle>Users</CardTitle>
             </CardHeader>
@@ -95,19 +95,7 @@ export default async function CoursePage({
               />
             </CardContent>
           </Card>
-          <Card className="md:w-1/3 flex flex-col w-fit m-auto">
-            <CardHeader className="flex items-center p-4">
-              <img
-                width={50}
-                height={50}
-                src={course.image}
-                alt="Course illustration"
-                className="rounded-full"
-              />
-              <CardTitle className="w-fit m-auto text-center">
-                {course.name}
-              </CardTitle>
-            </CardHeader>
+          <Card className="md:w-1/3 flex flex-col w-[90%] h-full m-auto">
             <CardContent className="flex flex-col gap-4">
               <div className="flex gap-4 items-center p-2">
                 <div className="flex flex-col gap4 w-2/3">
@@ -144,6 +132,6 @@ export default async function CoursePage({
           </Card>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }

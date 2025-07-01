@@ -1,6 +1,7 @@
 import { CourseRow } from "@/components/features/CourseRow";
 import { NewCourseBtn } from "@/components/features/NewCourseBtn";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
+import { PageHeader } from "@/components/layout/PageHeader";
 import {
   Table,
   TableBody,
@@ -22,10 +23,11 @@ export default async function adminCoursesPage() {
 
   return (
     <Layout>
-      <div className="w-full flex justify-between items-center p-4">
-        <h2 className="w-fit text-2xl">My Courses</h2>
-        <NewCourseBtn />
-      </div>
+      <PageHeader
+        imageUrl={session?.user.image}
+        userName={session?.user.name}
+        pageName="Courses"
+      />
       <LayoutContent>
         <Table className="w-3/4 m-auto">
           <TableHeader>
@@ -43,6 +45,7 @@ export default async function adminCoursesPage() {
           </TableBody>
         </Table>
       </LayoutContent>
+      <NewCourseBtn />
     </Layout>
   );
 }

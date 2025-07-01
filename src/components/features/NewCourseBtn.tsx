@@ -8,7 +8,7 @@ export const NewCourseBtn = () => {
     <Link
       className={cn(
         buttonVariants({ variant: "outline", size: "lg" }),
-        "w-fit flex gap-2"
+        "w-fit flex gap-2 m-auto"
       )}
       href="/admin/courses"
     >

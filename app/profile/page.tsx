@@ -1,19 +1,20 @@
 import { LogOutBtn } from "@/components/features/LogOutBtn";
+import { Layout, LayoutDescription } from "@/components/layout/Layout";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { getAuthSession } from "../../src/lib/auth";
+import { getRequiredAuthSession } from "../../src/lib/auth";
 import { cn } from "../../src/lib/utils";
 import Error from "./error";
 
 export default async function ProfilePage() {
-  const session = await getAuthSession();
+  const session = await getRequiredAuthSession();
 
   if (!session) {
     return <Error />;
@@ -21,48 +22,44 @@ export default async function ProfilePage() {
 
   return (
     session && (
-      <Card className="w-lg m-auto mt-4">
-        <CardHeader className="flex items-center justify-center gap-2 mt-5 px-15">
-          <img
-            width={60}
-            height={60}
-            className="rounded-full"
-            src={session.user.image ?? "/default.jpg"}
-            alt="profile picture"
-          />
-          <CardTitle className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <p>{session.user.email}</p>
-            </div>
-            <div className="flex gap-2">
-              <span>{session.user.name}</span>
-            </div>
-          </CardTitle>
-        </CardHeader>
-        <div className="w-full border-b borderwhite p-4"></div>
-        <CardContent className="flex flex-col gap-4 w-2/3 mx-auto">
-          <Link
-            href="/admin"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "cursor-pointer"
-            )}
-          >
-            Admin
-          </Link>
-          <Link
-            href="/"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "cursor-pointer"
-            )}
-          >
-            Settings
-          </Link>
-          <LogOutBtn isInProfilePage={true} />
-        </CardContent>
-        <CardFooter></CardFooter>
-      </Card>
+      <Layout>
+        <PageHeader
+          imageUrl={session?.user.image}
+          userName={session?.user.name}
+          pageName="Profile"
+        />
+        <Card className="w-lg m-auto mt-4">
+          <CardHeader>
+            <LayoutDescription className="text-center">
+              Change your account's settings or access to your class board to
+              manage your courses
+            </LayoutDescription>
+          </CardHeader>
+
+          <CardContent className="flex flex-col gap-4 w-2/3 mx-auto">
+            <Link
+              href="/admin"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "cursor-pointer"
+              )}
+            >
+              Class Board
+            </Link>
+            <Link
+              href="/"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "cursor-pointer"
+              )}
+            >
+              Settings
+            </Link>
+            <LogOutBtn isInProfilePage={true} />
+          </CardContent>
+          <CardFooter></CardFooter>
+        </Card>
+      </Layout>
     )
   );
 }
