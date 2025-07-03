@@ -89,8 +89,9 @@ export default async function CoursePage({
                 </TableBody>
               </Table>
               <PaginationBtn
+                totalEntries={course?._count?.users ?? 0}
+                entriesPerPAge={5}
                 baseUrl={`/admin/courses/${course.id}`}
-                totalUsers={course?._count?.users ?? 0}
                 page={page}
               />
             </CardContent>

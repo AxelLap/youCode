@@ -5,15 +5,17 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
 type PaginationBtnProps = {
-  totalUsers: number;
+  totalEntries: number;
+  entriesPerPAge: number;
   page: number;
   baseUrl: string;
 };
 
 export const PaginationBtn = ({
-  totalUsers,
+  totalEntries,
   page,
   baseUrl,
+  entriesPerPAge,
 }: PaginationBtnProps) => {
   const router = useRouter();
   return (
@@ -33,9 +35,9 @@ export const PaginationBtn = ({
         </Button>
       )}
       <span>
-        {page + 1} / {Math.ceil(totalUsers / 5)}
+        {page + 1} / {Math.ceil(totalEntries / entriesPerPAge)}
       </span>
-      {page + 1 < Math.ceil(totalUsers / 5) && (
+      {page + 1 < Math.ceil(totalEntries / entriesPerPAge) && (
         <Button
           onClick={() => {
             const searchParams = new URLSearchParams({
