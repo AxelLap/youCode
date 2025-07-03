@@ -1,17 +1,19 @@
 import { CoursesTable } from "@/components/features/CoursesTable";
-import { NewCourseBtn } from "@/components/features/NewCourseBtn";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
-
 import { getRequiredAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function adminCoursesPage() {
+export default async function CoursesPage() {
   const session = await getRequiredAuthSession();
 
   const courses = await prisma.course.findMany({
     where: {
-      creatorId: session.user.id,
+      users: {
+        some: {
+          userId: session.user.id,
+        },
+      },
     },
     include: {
       creator: true,
@@ -20,15 +22,10 @@ export default async function adminCoursesPage() {
 
   return (
     <Layout>
-      <PageHeader
-        imageUrl={session?.user.image}
-        userName={session?.user.name}
-        pageName="Courses"
-      />
+      <PageHeader pageName="My courses" />
       <LayoutContent>
-        <CoursesTable courses={courses} isAdmin={true} />
+        <CoursesTable courses={courses} isAdmin={false} />
       </LayoutContent>
-      <NewCourseBtn />
     </Layout>
   );
 }

@@ -31,11 +31,12 @@ export default async function ExplorerPage({
   return (
     <Layout className="max-w-[80%] ">
       <PageHeader pageName="Explorer" />
-      <div className="w-full gap-4 h-fit flex flex-wrap p-4 shrink-0">
+      <div className="w-full gap-4 h-fit flex flex-wrap p-4 shrink-0 justify-center">
         {courses &&
           courses.map((course) => (
             <CourseCard
               key={course.id}
+              id={course.id}
               title={course.name}
               image={course.image}
               creator={course.creator.name}

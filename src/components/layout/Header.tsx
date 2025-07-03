@@ -22,7 +22,12 @@ export function Header() {
             src="/logo.svg"
             alt="Youcode Logo"
           />
-          <Link href="/explorer">Explorer</Link>
+          <Typography as={Link} href="/explorer">
+            Explorer
+          </Typography>
+          <Typography as={Link} href="/courses">
+            Courses
+          </Typography>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
