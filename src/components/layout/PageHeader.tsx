@@ -22,6 +22,7 @@ export const PageHeader = ({
   } else {
     return (
       <LayoutHeader>
+        {imageUrl && <UserAvatar imageUrl={imageUrl} />}
         <LayoutTitle>{`${pageName}`}</LayoutTitle>
       </LayoutHeader>
     );

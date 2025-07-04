@@ -1,5 +1,4 @@
 "use client";
-import { MinusCircle, PlusCircle } from "lucide-react";
 import { Button } from "../../ui/button";
 
 import { useRouter } from "next/navigation";
@@ -19,7 +18,7 @@ export const PaginationBtn = ({
 }: PaginationBtnProps) => {
   const router = useRouter();
   return (
-    <div className="flex items-center justify-center p-2 gap-2 w-full relative">
+    <div className="flex items-center justify-center p-2 gap-2 w-[300px] m-auto relative">
       {page > 0 && (
         <Button
           onClick={() => {
@@ -28,13 +27,13 @@ export const PaginationBtn = ({
             });
             router.push(`${baseUrl}?${searchParams}`);
           }}
-          className="cursor-pointer absolute left-[25%]"
-          variant="ghost"
+          className="cursor-pointer absolute left-0 w-1/4 "
+          variant="outline"
         >
-          <MinusCircle />
+          Previous
         </Button>
       )}
-      <span>
+      <span className="w-1/4 text-center">
         {page + 1} / {Math.ceil(totalEntries / entriesPerPAge)}
       </span>
       {page + 1 < Math.ceil(totalEntries / entriesPerPAge) && (
@@ -45,10 +44,10 @@ export const PaginationBtn = ({
             });
             router.push(`${baseUrl}?${searchParams}`);
           }}
-          className="cursor-pointer absolute right-[25%]"
-          variant="ghost"
+          className="cursor-pointer absolute right-0 w-1/4"
+          variant="outline"
         >
-          <PlusCircle />
+          Next
         </Button>
       )}
     </div>
