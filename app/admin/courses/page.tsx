@@ -1,5 +1,5 @@
-import { CoursesTable } from "@/components/features/CoursesTable";
-import { NewCourseBtn } from "@/components/features/NewCourseBtn";
+import { CoursesTable } from "@/components/features/admin/CoursesTable";
+import { NewCourseBtn } from "@/components/features/admin/NewCourseBtn";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 
@@ -26,7 +26,7 @@ export default async function adminCoursesPage() {
         pageName="Courses"
       />
       <LayoutContent>
-        <CoursesTable courses={courses} isAdmin={true} />
+        <CoursesTable courses={courses} />
       </LayoutContent>
       <NewCourseBtn />
     </Layout>

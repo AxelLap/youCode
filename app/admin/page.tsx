@@ -1,4 +1,4 @@
-import { NewCourseBtn } from "@/components/features/NewCourseBtn";
+import { NewCourseBtn } from "@/components/features/admin/NewCourseBtn";
 import { Layout } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { buttonVariants } from "@/components/ui/button";

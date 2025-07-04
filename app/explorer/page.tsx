@@ -1,5 +1,6 @@
-import { CourseCard } from "@/components/features/CourseCard";
-import { PaginationBtn } from "@/components/features/PaginationButn";
+import { CourseCard } from "@/components/features/courses/CourseCard";
+import { CoursesWrapper } from "@/components/features/courses/CoursesWrapper";
+import { PaginationBtn } from "@/components/features/navigation/PaginationButn";
 import { Layout } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 
@@ -29,9 +30,9 @@ export default async function ExplorerPage({
   }
 
   return (
-    <Layout className="max-w-[80%] ">
+    <Layout className="max-w-[90%] ">
       <PageHeader pageName="Explorer" />
-      <div className="w-full gap-4 h-fit flex flex-wrap p-4 shrink-0 justify-center">
+      <CoursesWrapper>
         {courses &&
           courses.map((course) => (
             <CourseCard
@@ -43,7 +44,7 @@ export default async function ExplorerPage({
               creatorImage={course.creator.image}
             />
           ))}
-      </div>
+      </CoursesWrapper>
 
       <PaginationBtn
         baseUrl="/explorer"

@@ -23,10 +23,10 @@ import {
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { LoginBtn } from "../features/LoginBtn";
-import { buttonVariants } from "../ui/button";
-import { LogOutBtn } from "./LogOutBtn";
-import { LoggedInBtn } from "./LoggedInBtn";
+import { buttonVariants } from "../../ui/button";
+import { LogOutBtn } from "../login/LogOutBtn";
+import { LoggedInBtn } from "../login/LoggedInBtn";
+import { LoginBtn } from "../login/LoginBtn";
 
 export const DropDownMenu = () => {
   const { data: session } = useSession();

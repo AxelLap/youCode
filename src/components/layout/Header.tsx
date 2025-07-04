@@ -4,7 +4,7 @@ import { SiteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import { ThemeToggle } from "../ThemeToggle";
 
-import { DropDownMenu } from "../features/DropDownMenu";
+import { DropDownMenu } from "../features/navigation/DropDownMenu";
 import { Typography } from "../ui/Typography";
 
 export function Header() {

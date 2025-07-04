@@ -1,6 +1,6 @@
 "use client"; // Error boundaries must be Client Components
 
-import { LoginBtn } from "@/components/features/LoginBtn";
+import { LoginBtn } from "@/components/features/login/LoginBtn";
 import { signIn } from "next-auth/react";
 
 export default function Error() {

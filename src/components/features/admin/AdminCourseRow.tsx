@@ -1,8 +1,8 @@
 "use client";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { CourseState, User } from "@prisma/client";
+import { CourseState } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { UserAvatar } from "./UserAvatar";
+import { UserAvatar } from "../images/UserAvatar";
 
 type CourseRowProps = {
   course: {
@@ -13,18 +13,17 @@ type CourseRowProps = {
     createdAt: Date;
     creatorId: string;
     state: CourseState;
-    creator: User;
   };
 };
 
-export const CourseRow = ({ course }: CourseRowProps) => {
+export const AdminCourseRow = ({ course }: CourseRowProps) => {
   const router = useRouter();
   return (
     <TableRow
       className="cursor-pointer mt-2 h-[60px] max-h-[60px] w-full items-center"
       key={course.id}
       onClick={() => {
-        router.push(`/courses/${course.id}`);
+        router.push(`/admin/courses/${course.id}`);
       }}
     >
       <TableCell className="flex justify-center items-center">
@@ -33,9 +32,8 @@ export const CourseRow = ({ course }: CourseRowProps) => {
       <TableCell>
         <h3>{course.name}</h3>
       </TableCell>
-      <TableCell className="flex justify-center items-center gap-2">
-        <UserAvatar imageUrl={course.creator.image} />
-        {course.creator.name}
+      <TableCell className="flex justify-center items-center">
+        {course.state}
       </TableCell>
     </TableRow>
   );

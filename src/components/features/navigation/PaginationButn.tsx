@@ -1,6 +1,6 @@
 "use client";
 import { MinusCircle, PlusCircle } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 import { useRouter } from "next/navigation";
 

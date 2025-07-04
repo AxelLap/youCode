@@ -1,7 +1,7 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "../../lib/utils";
-import { UserAvatar } from "./UserAvatar";
+import { cn } from "../../../lib/utils";
+import { UserAvatar } from "../images/UserAvatar";
 
 type LoggedInBtnProps = {
   userSession: {

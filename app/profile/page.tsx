@@ -1,4 +1,4 @@
-import { LogOutBtn } from "@/components/features/LogOutBtn";
+import { LogOutBtn } from "@/components/features/login/LogOutBtn";
 import { Layout, LayoutDescription } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { buttonVariants } from "@/components/ui/button";

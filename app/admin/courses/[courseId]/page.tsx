@@ -1,5 +1,5 @@
-import { PaginationBtn } from "@/components/features/PaginationButn";
-import { UserAvatar } from "@/components/features/UserAvatar";
+import { UserAvatar } from "@/components/features/images/UserAvatar";
+import { PaginationBtn } from "@/components/features/navigation/PaginationButn";
 import { Layout } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button, buttonVariants } from "@/components/ui/button";

@@ -1,4 +1,4 @@
-import { UserAvatar } from "../features/UserAvatar";
+import { UserAvatar } from "../features/images/UserAvatar";
 import { LayoutHeader, LayoutTitle } from "./Layout";
 
 type PageHeaderProps = {

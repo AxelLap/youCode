@@ -1,4 +1,5 @@
-import { CoursesTable } from "@/components/features/CoursesTable";
+import { CourseCard } from "@/components/features/courses/CourseCard";
+import { CoursesWrapper } from "@/components/features/courses/CoursesWrapper";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { getRequiredAuthSession } from "@/lib/auth";
@@ -21,10 +22,22 @@ export default async function CoursesPage() {
   });
 
   return (
-    <Layout>
+    <Layout className="max-w-[90%] ">
       <PageHeader pageName="My courses" />
       <LayoutContent>
-        <CoursesTable courses={courses} isAdmin={false} />
+        <CoursesWrapper>
+          {courses &&
+            courses.map((course) => (
+              <CourseCard
+                key={course.id}
+                id={course.id}
+                title={course.name}
+                image={course.image}
+                creator={course.creator.name}
+                creatorImage={course.creator.image}
+              />
+            ))}
+        </CoursesWrapper>
       </LayoutContent>
     </Layout>
   );
