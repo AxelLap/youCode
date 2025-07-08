@@ -47,7 +47,7 @@ export default async function ProfilePage() {
               Class Board
             </Link>
             <Link
-              href="/"
+              href="/settings"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "cursor-pointer"
