@@ -20,7 +20,7 @@ export const CourseCard = ({
   id,
 }: CourseCardProps) => {
   return (
-    <Link href={`/courses/${id}`}>
+    <Link href={`/explorer/courses/${id}`}>
       <Card className="h-[130px] flex flex-row items-center gap-3 w-xs p-0 ltr hover:bg-accent cursor-pointer">
         <CourseImage image={image} />
         <div className="w-[50%] flex flex-col gap-2 p-1 justify-center text-center h-full">

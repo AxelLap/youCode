@@ -9,8 +9,8 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { getRequiredAuthSession } from "../../src/lib/auth";
-import { cn } from "../../src/lib/utils";
+import { getRequiredAuthSession } from "../../../src/lib/auth";
+import { cn } from "../../../src/lib/utils";
 import Error from "./error";
 
 export default async function ProfilePage() {
@@ -38,7 +38,7 @@ export default async function ProfilePage() {
 
           <CardContent className="flex flex-col gap-4 w-2/3 mx-auto">
             <Link
-              href="/admin"
+              href="/admin/courses"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "cursor-pointer"
@@ -47,7 +47,7 @@ export default async function ProfilePage() {
               Class Board
             </Link>
             <Link
-              href="/settings"
+              href="/admin/settings"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "cursor-pointer"

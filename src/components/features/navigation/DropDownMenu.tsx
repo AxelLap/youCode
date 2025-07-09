@@ -65,7 +65,7 @@ export const DropDownMenu = () => {
                   buttonVariants({ variant: "outline" }),
                   "w-full flex gap-2 items-center cursor-pointer my-2"
                 )}
-                href="/profile"
+                href="/admin/profile"
               >
                 My profile
               </Link>

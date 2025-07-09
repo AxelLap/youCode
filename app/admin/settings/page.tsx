@@ -54,7 +54,7 @@ export default async function SettingsPage() {
               data: safeData.data,
             });
 
-            revalidatePath("/settings");
+            revalidatePath("/admin/settings");
           }}
         >
           <div className="flex w-full flex-col gap-4 p-2">
