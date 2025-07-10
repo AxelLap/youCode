@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
 import { Menu } from "lucide-react";
-import { getLessons } from "../admin-course.query";
+import { getLessons } from "../../admin-course.query";
 
 export default async function LessonsPage({
   params,

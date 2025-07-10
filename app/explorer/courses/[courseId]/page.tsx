@@ -62,29 +62,37 @@ export default async function CoursePage({
             </Typography>
           </CardHeader>
           <CardContent className="p-0 flex flex-col gap-4">
-            {course?.lessons.map((lesson) => (
-              <div
-                key={lesson.id}
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "flex justify-between h-10 p-2 w-full rounded-md items-center gap-2 p-1"
-                )}
-              >
-                <Typography className="flex w-1/2 items-center" as={"p"}>
-                  {lesson.name}
+            {course?.lessons.length !== 0 ? (
+              course?.lessons.map((lesson) => (
+                <div
+                  key={lesson.id}
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "flex justify-between h-10 p-2 w-full rounded-md items-center gap-2 p-1"
+                  )}
+                >
+                  <Typography className="flex w-1/2 items-center" as={"p"}>
+                    {lesson.name}
+                  </Typography>
+                  <span className="flex gap-1">
+                    {lesson?.rank &&
+                      Array.from(lesson.rank).map((r) =>
+                        r === "a" ? (
+                          <Star key={Math.random()} />
+                        ) : (
+                          <StarOff key={Math.random()} />
+                        )
+                      )}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col gap-4 w-full justify-center items-center">
+                <Typography as={"span"}>
+                  No lessons created yet please come back later
                 </Typography>
-                <span className="flex gap-1">
-                  {lesson?.rank &&
-                    Array.from(lesson.rank).map((r) =>
-                      r === "a" ? (
-                        <Star key={Math.random()} />
-                      ) : (
-                        <StarOff key={Math.random()} />
-                      )
-                    )}
-                </span>
               </div>
-            ))}
+            )}
           </CardContent>
         </Card>
       </LayoutContent>

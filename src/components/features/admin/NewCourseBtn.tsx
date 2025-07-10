@@ -10,7 +10,7 @@ export const NewCourseBtn = () => {
         buttonVariants({ variant: "outline", size: "lg" }),
         "w-fit flex gap-2 m-auto"
       )}
-      href="/admin/courses"
+      href="/admin/courses/addnew"
     >
       <PlusCircle />
       Create New

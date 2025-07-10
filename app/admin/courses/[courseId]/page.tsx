@@ -16,8 +16,8 @@ import { getRequiredAuthSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import { getAdminCourse } from "../admin-course.query";
 import Error from "../error";
-import { getAdminCourse } from "./admin-course.query";
 
 export default async function CoursePage({
   params,
