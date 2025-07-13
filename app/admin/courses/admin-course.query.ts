@@ -1,4 +1,4 @@
-import generateCourseId from "@/lib/generate-id";
+import { generateCourseId } from "@/lib/generate-id";
 import { prisma } from "@/lib/prisma";
 import { Course } from "@prisma/client";
 

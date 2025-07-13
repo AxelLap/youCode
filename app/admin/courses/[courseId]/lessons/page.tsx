@@ -74,8 +74,11 @@ export default async function LessonsPage({
             ))}
           <CardFooter>
             <Link
-              href="/"
-              className="flex items-center justify-center gap-2 my-4 mx-auto cursor-pointer hover:bg-green-500"
+              href={`/admin/courses/${params.courseId}/lessons/addNew`}
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "flex items-center justify-center gap-2 my-4 mx-auto cursor-pointer"
+              )}
             >
               <PlusCircle />
               <span>Add new lesson</span>

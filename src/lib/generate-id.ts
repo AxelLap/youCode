@@ -7,6 +7,10 @@ function generateRandomId(length: number) {
   return result;
 }
 
-export default function generateCourseId() {
-  return "cmcvis" + generateRandomId(22);
+export function generateCourseId() {
+  return "crid" + generateRandomId(22);
+}
+
+export function generateLessonId() {
+  return "lrid" + generateRandomId(22);
 }

@@ -9,32 +9,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { prisma } from "@/lib/prisma";
+import { Textarea } from "@/components/ui/textarea";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { addLesson } from "../admin-lesson.query";
 
-const LessonSettingsValidator = z.object({
+const newLessonValidator = z.object({
   name: z.string().min(4).max(40),
   state: z.enum(["HIDDEN", "PUBLISHED", "PUBLIC"]),
+  content: z.string().min(25).max(2000),
 });
 
-export default async function LessonSettingsPage({
+export default async function AddNewLessonPage({
   params,
 }: {
-  params: { courseId: string },
+  params: {
+    courseId: string;
+  };
 }) {
-  const lesson = await prisma.lesson.findUnique({
-    where: {
-      id: params.lessonId,
-    },
-    include: {
-      course: true,
-    },
-  });
-
   return (
     <Layout>
-      <PageHeader pageName={`${lesson?.name}'s settings`} />
+      <PageHeader pageName="Add new lesson" />
       <LayoutContent>
         <form
           action={async (formData: FormData) => {
@@ -44,33 +39,38 @@ export default async function LessonSettingsPage({
 
             const state = formData.get("state");
 
-            const validatedData = LessonSettingsValidator.safeParse({
+            const content = formData.get("content");
+
+            const validatedData = newLessonValidator.safeParse({
               name,
               state,
+              content,
             });
 
             if (validatedData.success) {
-              await prisma.lesson.update({
-                where: {
-                  id: params.lessonId,
-                },
-                data: validatedData.data,
-              });
-              revalidatePath(
-                `/admin/courses/${lesson?.course.id}/lessons/${lesson?.id}/settings`
+              console.log(validatedData.data);
+
+              const newLesson = await addLesson(
+                params.courseId,
+                validatedData.data
               );
+              revalidatePath(
+                `/admin/courses/${params.courseId}/lessons/${newLesson?.id}`
+              );
+            } else {
+              console.log("error");
             }
           }}
           className="w-full flex flex-col gap-6 p-4 m-2"
         >
           <div className="flex mb-4 w-full flex-col gap-2 p-1">
             <label htmlFor="name">Name</label>
-            <Input name="name" defaultValue={lesson?.name} type="text" />
+            <Input name="name" type="text" />
           </div>
           <div className="flex mb-4 w-full items-center flex-col gap-2 p-1 cursor-pointer">
             <label htmlFor="state">State</label>
 
-            <Select name="state" defaultValue={lesson?.state}>
+            <Select name="state">
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="- Choose a state -" />
               </SelectTrigger>
@@ -81,6 +81,14 @@ export default async function LessonSettingsPage({
               </SelectContent>
             </Select>
           </div>
+          <div className="flex mb-4 w-full flex-col gap-2 p-1">
+            <label htmlFor="name">Content</label>
+            <Textarea
+              name="content"
+              placeholder="Type your lesson content here"
+            />
+          </div>
+
           <Button
             variant="outline"
             className="w-fit m-auto cursor-pointer"
