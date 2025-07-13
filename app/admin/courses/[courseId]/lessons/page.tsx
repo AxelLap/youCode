@@ -1,9 +1,18 @@
 import { Layout } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
-import { Menu } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { Edit, PlusCircle, Trash } from "lucide-react";
+import Link from "next/link";
 import { getLessons } from "../../admin-course.query";
 
 export default async function LessonsPage({
@@ -48,10 +57,30 @@ export default async function LessonsPage({
                   >
                     <p>{lesson.state}</p>
                   </Badge>
-                  <Menu />
+                  <Link
+                    href={`/admin/courses/${params.courseId}/lessons/${lesson.id}/settings`}
+                    className={cn(
+                      buttonVariants({ variant: "outline" }),
+                      "cursor-pointer"
+                    )}
+                  >
+                    <Edit />
+                  </Link>
+                  <Button className="cursor-pointer" variant="destructive">
+                    <Trash />
+                  </Button>
                 </div>
               </div>
             ))}
+          <CardFooter>
+            <Link
+              href="/"
+              className="flex items-center justify-center gap-2 my-4 mx-auto cursor-pointer hover:bg-green-500"
+            >
+              <PlusCircle />
+              <span>Add new lesson</span>
+            </Link>
+          </CardFooter>
         </CardContent>
       </Card>
     </Layout>

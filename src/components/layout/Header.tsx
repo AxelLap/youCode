@@ -25,8 +25,8 @@ export function Header() {
           <Typography as={Link} href="/explorer">
             Explorer
           </Typography>
-          <Typography as={Link} href="/courses">
-            Courses
+          <Typography as={Link} href="/explorer/courses">
+            My courses
           </Typography>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
