@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { addLesson } from "../admin-lesson.query";
 
@@ -57,6 +58,7 @@ export default async function AddNewLessonPage({
               revalidatePath(
                 `/admin/courses/${params.courseId}/lessons/${newLesson?.id}`
               );
+              redirect(`/admin/courses/${params.courseId}/lessons`);
             } else {
               console.log("error");
             }
