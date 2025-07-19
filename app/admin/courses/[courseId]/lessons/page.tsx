@@ -8,12 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { PlusCircle } from "lucide-react";
+import { Edit, PlusCircle, Trash } from "lucide-react";
 import Link from "next/link";
 import { getLessons } from "../../admin-course.query";
-import { DragAndDropArea } from "./DragAndDropArea";
 
 export default async function LessonsPage({
   params,
@@ -36,20 +36,55 @@ export default async function LessonsPage({
           <CardTitle className="p-2">Lessons</CardTitle>
         </CardHeader>
         <CardContent>
-          <DragAndDropArea initialLessons={lessons.lessons} />
-          <CardFooter>
-            <Link
-              href={`/admin/courses/${params.courseId}/lessons/addNew`}
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "flex items-center justify-center gap-2 my-4 mx-auto cursor-pointer"
-              )}
-            >
-              <PlusCircle />
-              <span>Add new lesson</span>
-            </Link>
-          </CardFooter>
+          {lessons &&
+            lessons.lessons.map((lesson) => (
+              <div
+                key={lesson.id}
+                className="flex w-full gap-4 p-4 m-1 rounded-md items-center hover:bg-black duration-300 transition-easeIn cursor-pointer"
+              >
+                <span className="w-3/4 overflow-hidden truncate ">
+                  {lesson.name}
+                </span>
+                <div className="flex gap-2 ml-auto">
+                  <Badge
+                    variant={
+                      lesson.state === "HIDDEN"
+                        ? "destructive"
+                        : lesson.state === "PUBLISHED"
+                        ? "secondary"
+                        : "outline"
+                    }
+                  >
+                    <p>{lesson.state}</p>
+                  </Badge>
+                  <Link
+                    href={`/admin/courses/${params.courseId}/lessons/${lesson.id}/settings`}
+                    className={cn(
+                      buttonVariants({ variant: "outline" }),
+                      "cursor-pointer"
+                    )}
+                  >
+                    <Edit />
+                  </Link>
+                  <Button className="cursor-pointer" variant="destructive">
+                    <Trash />
+                  </Button>
+                </div>
+              </div>
+            ))}
         </CardContent>
+        <CardFooter>
+          <Link
+            href={`/admin/courses/${params.courseId}/lessons/addNew`}
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "flex items-center justify-center gap-2 my-4 mx-auto cursor-pointer"
+            )}
+          >
+            <PlusCircle />
+            <span>Add new lesson</span>
+          </Link>
+        </CardFooter>
       </Card>
     </Layout>
   );
