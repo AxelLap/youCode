@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const LessonSettingsValidator = z.object({
@@ -59,6 +60,7 @@ export default async function LessonSettingsPage({
               revalidatePath(
                 `/admin/courses/${lesson?.course.id}/lessons/${lesson?.id}/settings`
               );
+              redirect(`/admin/courses/${lesson?.course.id}/lessons`);
             }
           }}
           className="w-full flex flex-col gap-6 p-4 m-2"
