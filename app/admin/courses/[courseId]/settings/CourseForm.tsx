@@ -29,6 +29,7 @@ export const CourseForm = (props: CourseFormProps) => {
   });
   return (
     <Form
+      className=" p-4 m-2"
       form={form}
       onSubmit={async (values) => {
         if (props.defaultValue?.id) {
@@ -54,51 +55,62 @@ export const CourseForm = (props: CourseFormProps) => {
         }
       }}
     >
-      <FormField
-        control={form.control}
-        name="image"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Image</FormLabel>
-            <FormControl>
-              <Input placeholder="http://googleimage.com" {...field} />
-            </FormControl>
-            <FormDescription>Host and use any image you want</FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Name</FormLabel>
-            <FormControl>
-              <Input placeholder="Title" {...field} />
-            </FormControl>
-            <FormDescription>Find a fine name for your course</FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="presentation"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Presentation</FormLabel>
-            <FormControl>
-              <Textarea placeholder="Presentation..." {...field} />
-            </FormControl>
-            <FormDescription>
-              Write a few words to present this course
-            </FormDescription>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <Button type="submit">Submit</Button>
+      <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
+        <FormField
+          control={form.control}
+          name="image"
+          render={({ field }) => (
+            <FormItem className="w-full p-2">
+              <FormLabel>Image</FormLabel>
+              <FormControl>
+                <Input placeholder="http://googleimage.com" {...field} />
+              </FormControl>
+              <FormDescription>Host and use any image you want</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="w-full p-2">
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Title" {...field} />
+              </FormControl>
+              <FormDescription>
+                Find a fine name for your course
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="presentation"
+          render={({ field }) => (
+            <FormItem className="w-full p-2">
+              <FormLabel>Presentation</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Presentation..." {...field} />
+              </FormControl>
+              <FormDescription>
+                Write a few words to present this course
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+          className="m-auto w-fit p-2 "
+          variant="outline"
+          size="lg"
+          type="submit"
+        >
+          Submit
+        </Button>
+      </div>
     </Form>
   );
 };
