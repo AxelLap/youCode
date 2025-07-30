@@ -25,10 +25,6 @@ export default async function ExplorerPage({
 
   const entries = await prisma.course.count();
 
-  if (courses) {
-    console.log(courses);
-  }
-
   return (
     <Layout className="max-w-[90%] ">
       <PageHeader pageName="Explorer" />

@@ -10,6 +10,7 @@ import { Inter } from "next/font/google";
 import { PropsWithChildren } from "react";
 import { Providers } from "./Providers";
 import "./globals.css";
+import { Breadcrumbs } from "@/components/features/navigation/Breadcrumbs";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <Providers>
             <div className="relative flex min-h-screen flex-col">
               <Header />
+              <Breadcrumbs />
               <div className="flex-1">{children}</div>
               <Footer />
             </div>
