@@ -24,7 +24,11 @@ export const Breadcrumbs = () => {
             return (
               <div key={i} className="flex item-center text-gray-400">
                 <span className="mx-3">{">"}</span>
-                <span>{segment}</span>
+                <span>
+                  {segment.length >= 17
+                    ? segment.slice(0, 3) + "..." + segment.slice(-3)
+                    : segment}
+                </span>
               </div>
             );
           }
@@ -32,7 +36,9 @@ export const Breadcrumbs = () => {
             <div key={i} className="flex item-center text-blue-200">
               <span className="mx-3">{">"}</span>
               <Link className=" hover:underline" href={path}>
-                {segment}
+                {segment.length >= 17
+                  ? segment.slice(0, 3) + "..." + segment.slice(-3)
+                  : segment}
               </Link>
             </div>
           );
