@@ -2,14 +2,8 @@ import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Typography } from "@/components/ui/Typography";
 import { prisma } from "@/lib/prisma";
-import { z } from "zod";
-import { CourseForm } from "./CourseForm";
 
-const CourseSettingsValidator = z.object({
-  name: z.string().min(4).max(40),
-  image: z.string().url(),
-  presentation: z.string().min(10).max(200),
-});
+import { CourseForm } from "./CourseForm";
 
 export default async function CourseSettingsPage({
   params,

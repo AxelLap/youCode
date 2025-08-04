@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { courseActionEdit } from "./course.action";
+import { courseActionAdd, courseActionEdit } from "./course.action";
 import { CourseFormSchema } from "./course.schema";
 
 export type CourseFormProps = {
@@ -23,9 +23,16 @@ export type CourseFormProps = {
 
 export const CourseForm = (props: CourseFormProps) => {
   const router = useRouter();
+
+  const defaultCourseValues = {
+    name: "",
+    image: "",
+    presentation: "",
+  };
+
   const form = useZodForm({
     schema: CourseFormSchema,
-    defaultValues: props.defaultValue,
+    defaultValues: props.defaultValue ?? defaultCourseValues,
   });
   return (
     <Form
@@ -51,7 +58,18 @@ export const CourseForm = (props: CourseFormProps) => {
             return;
           }
         } else {
-          // TO DO create course
+          const { data, serverError } = await courseActionAdd({ data: values });
+          if (data) {
+            router.push(`/admin/courses/`);
+            router.refresh();
+            toast.success("Course created !");
+          }
+          if (serverError) {
+            toast.error("Some error occured : ", {
+              description: serverError,
+            });
+            return;
+          }
         }
       }}
     >
