@@ -1,0 +1,115 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  useZodForm,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { LessonFormSchema } from "../../lesson.schema";
+
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { lessonActionUpdate } from "../../lesson.action";
+
+export type LessonFormProps = {
+  defaultValues?: LessonFormSchema & { id: string };
+};
+
+export const LessonForm = (props: LessonFormProps) => {
+  const router = useRouter();
+
+  const form = useZodForm({
+    schema: LessonFormSchema,
+    defaultValues: props.defaultValues,
+  });
+
+  return (
+    <Form
+      className=" p-4 m-2"
+      form={form}
+      onSubmit={async (values) => {
+        if (props.defaultValues?.id) {
+          const { data, serverError } = await lessonActionUpdate({
+            lessonId: props.defaultValues.id,
+            data: values,
+          });
+
+          if (data) {
+            router.push(`/admin/courses/${data.courseId}/lessons`);
+            router.refresh();
+            toast(`${data.message}`);
+          }
+
+          if (serverError) {
+            toast(`An error occured : ${serverError}`);
+          }
+        } else {
+          // TODO => Create Lesson
+        }
+      }}
+    >
+      <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2 w-full p-2">
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormDescription>Enter a name for your lesson</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="state"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2 w-full p-2">
+              <FormLabel>State</FormLabel>
+              <FormControl>
+                <Select>
+                  <SelectTrigger className="m-auto w-[50%]">
+                    <SelectValue {...field} placeholder="State..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="HIDDEN">Hidden</SelectItem>
+                    <SelectItem value="PUBLISHED">Published</SelectItem>
+                    <SelectItem value="PUBLIC">Public</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormDescription>
+                Select an intial state for your lesson
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button
+          className="m-auto w-fit p-2 "
+          variant="outline"
+          size="lg"
+          type="submit"
+        >
+          Submit
+        </Button>
+      </div>
+    </Form>
+  );
+};

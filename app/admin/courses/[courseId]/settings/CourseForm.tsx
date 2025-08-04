@@ -14,8 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { courseActionAdd, courseActionEdit } from "./course.action";
-import { CourseFormSchema } from "./course.schema";
+
+import { courseActionCreate, courseActionUpdate } from "../../course.action";
+import { CourseFormSchema } from "../../course.schema";
 
 export type CourseFormProps = {
   defaultValue?: CourseFormSchema & { id: string };
@@ -40,7 +41,7 @@ export const CourseForm = (props: CourseFormProps) => {
       form={form}
       onSubmit={async (values) => {
         if (props.defaultValue?.id) {
-          const { data, serverError } = await courseActionEdit({
+          const { data, serverError } = await courseActionUpdate({
             courseId: props.defaultValue?.id,
             data: values,
           });
@@ -58,11 +59,13 @@ export const CourseForm = (props: CourseFormProps) => {
             return;
           }
         } else {
-          const { data, serverError } = await courseActionAdd({ data: values });
+          const { data, serverError } = await courseActionCreate({
+            data: values,
+          });
           if (data) {
-            router.push(`/admin/courses/`);
+            router.push(`/admin/courses/${data.course.id}`);
             router.refresh();
-            toast.success("Course created !");
+            toast.success(`${data.message}`);
           }
           if (serverError) {
             toast.error("Some error occured : ", {

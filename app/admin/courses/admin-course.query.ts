@@ -1,6 +1,4 @@
-import { generateCourseId } from "@/lib/generate-id";
 import { prisma } from "@/lib/prisma";
-import { Course } from "@prisma/client";
 
 export async function getAdminCourse({
   courseId,
@@ -60,35 +58,6 @@ export async function getAdminCourse({
     ...course,
     users,
   };
-}
-
-export async function addCourse(
-  formData: { name: string; image: string; presentation: string },
-  user: {
-    id: string;
-    email?: string | undefined;
-    image?: string | undefined;
-    name?: string | undefined;
-  }
-) {
-  const newCourse: Course = await prisma.course.create({
-    data: {
-      id: generateCourseId(),
-      name: formData.name,
-      presentation: formData.presentation,
-      image: formData.image,
-      createdAt: new Date(),
-      creatorId: user.id,
-      state: "DRAFT",
-    },
-    include: {
-      creator: true,
-      lessons: true,
-      users: true,
-    },
-  });
-
-  return newCourse;
 }
 
 export async function getLessons(courseId: string) {

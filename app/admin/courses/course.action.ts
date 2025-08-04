@@ -6,13 +6,13 @@ import { z } from "zod";
 import { CourseFormSchema } from "./course.schema";
 
 // actions
-const CourseActionEditProps = z.object({
+const CourseActionUpdateProps = z.object({
   courseId: z.string(),
   data: CourseFormSchema,
 });
 
-export const courseActionEdit = authAction
-  .inputSchema(CourseActionEditProps)
+export const courseActionUpdate = authAction
+  .inputSchema(CourseActionUpdateProps)
   .action(async ({ parsedInput, ctx }) => {
     await prisma.course.update({
       where: {
@@ -24,17 +24,17 @@ export const courseActionEdit = authAction
     return "Successfully updated";
   });
 
-const CourseActionAddProps = z.object({
+const CourseActionCreateProps = z.object({
   data: CourseFormSchema,
 });
 
-export const courseActionAdd = authAction
-  .inputSchema(CourseActionAddProps)
+export const courseActionCreate = authAction
+  .inputSchema(CourseActionCreateProps)
   .action(async ({ parsedInput, ctx }) => {
     if (!ctx.userId) {
       throw new Error("User is not authenticated");
     }
-    await prisma.course.create({
+    const course = await prisma.course.create({
       data: {
         id: generateCourseId(),
         name: parsedInput.data.name,
@@ -50,5 +50,5 @@ export const courseActionAdd = authAction
         users: true,
       },
     });
-    return "Successfully updated";
+    return { message: "Successfully updated", course: course };
   });

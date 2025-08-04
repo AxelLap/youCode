@@ -24,11 +24,12 @@ export default async function adminCoursesPage() {
         imageUrl={session?.user.image}
         userName={session?.user.name}
         pageName="Courses"
-      />
+      >
+        <NewCourseBtn />
+      </PageHeader>
       <LayoutContent>
         <CoursesTable courses={courses} />
       </LayoutContent>
-      <NewCourseBtn />
     </Layout>
   );
 }
