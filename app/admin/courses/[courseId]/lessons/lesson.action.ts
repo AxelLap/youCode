@@ -36,3 +36,31 @@ export const lessonActionUpdate = authAction
       throw new Error("You are not authorized to update this lesson");
     }
   });
+
+const LessonActioncreateProp = z.object({
+  data: LessonFormSchema,
+  courseId: z.string(),
+});
+
+export const lessonActioncreate = authAction
+  .inputSchema(LessonActioncreateProp)
+  .action(async ({ parsedInput, ctx }) => {
+    if (ctx.userId) {
+      const createdLesson = await prisma.lesson.create({
+        data: {
+          name: parsedInput.data.name,
+          state: parsedInput.data.state,
+          content: parsedInput.data.content,
+          rank: "aaaaa",
+          courseId: parsedInput.courseId,
+        },
+      });
+      return {
+        message: "Lesson successfully created !",
+        lesson: createdLesson,
+        courseId: parsedInput.courseId,
+      };
+    } else {
+      throw new Error("You must be logged to create lessons");
+    }
+  });

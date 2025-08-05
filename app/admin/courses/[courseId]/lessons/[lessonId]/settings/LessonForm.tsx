@@ -20,20 +20,31 @@ import {
 } from "@/components/ui/select";
 import { LessonFormSchema } from "../../lesson.schema";
 
+import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { lessonActionUpdate } from "../../lesson.action";
+import { lessonActioncreate, lessonActionUpdate } from "../../lesson.action";
 
-export type LessonFormProps = {
-  defaultValues?: LessonFormSchema & { id: string };
-};
+export type LessonFormProps =
+  | {
+      defaultValues: LessonFormSchema & { id: string };
+      courseId?: undefined;
+    }
+  | {
+      defaultValues?: undefined;
+      courseId: string;
+    };
 
 export const LessonForm = (props: LessonFormProps) => {
   const router = useRouter();
 
   const form = useZodForm({
     schema: LessonFormSchema,
-    defaultValues: props.defaultValues,
+    defaultValues: props.defaultValues ?? {
+      name: "",
+      state: "HIDDEN", // ou une valeur par défaut de ton enum
+      content: "",
+    },
   });
 
   return (
@@ -56,8 +67,22 @@ export const LessonForm = (props: LessonFormProps) => {
           if (serverError) {
             toast(`An error occured : ${serverError}`);
           }
-        } else {
-          // TODO => Create Lesson
+        }
+        if (props.courseId) {
+          const { data, serverError } = await lessonActioncreate({
+            courseId: props.courseId,
+            data: values,
+          });
+
+          if (data) {
+            router.push(`/admin/courses/${data.courseId}/lessons`);
+            router.refresh();
+            toast(`${data.message}`);
+          }
+
+          if (serverError) {
+            toast(`An error occured : ${serverError}`);
+          }
         }
       }}
     >
@@ -83,7 +108,7 @@ export const LessonForm = (props: LessonFormProps) => {
             <FormItem className="flex flex-col gap-2 w-full p-2">
               <FormLabel>State</FormLabel>
               <FormControl>
-                <Select>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <SelectTrigger className="m-auto w-[50%]">
                     <SelectValue {...field} placeholder="State..." />
                   </SelectTrigger>
@@ -101,6 +126,24 @@ export const LessonForm = (props: LessonFormProps) => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem className="flex flex-col gap-2 w-full p-2">
+              <FormLabel>Content</FormLabel>
+              <FormControl>
+                <Textarea {...field} />
+              </FormControl>
+              <FormDescription>
+                Select an intial state for your lesson
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button
           className="m-auto w-fit p-2 "
           variant="outline"

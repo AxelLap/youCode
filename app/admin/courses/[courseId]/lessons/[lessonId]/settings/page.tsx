@@ -29,6 +29,7 @@ export default async function LessonSettingsPage({
           defaultValues={{
             name: lesson?.name,
             state: lesson?.state,
+            content: lesson?.content,
             id: lesson.id,
           }}
         />
