@@ -1,7 +1,7 @@
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 
-import { LessonForm } from "../[lessonId]/settings/LessonForm";
+import { LessonForm } from "../[lessonId]/edit/LessonForm";
 
 export default async function AddNewLessonPage({
   params,

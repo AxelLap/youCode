@@ -42,9 +42,14 @@ export default async function LessonsPage({
                 key={lesson.id}
                 className="flex w-full gap-4 p-4 m-1 rounded-md items-center hover:bg-black duration-300 transition-easeIn cursor-pointer"
               >
-                <span className="w-3/4 overflow-hidden truncate ">
-                  {lesson.name}
-                </span>
+                <Link
+                  href={`/admin/courses/${params.courseId}/lessons/${lesson.id}`}
+                >
+                  <span className="w-3/4 overflow-hidden truncate ">
+                    {lesson.name}
+                  </span>
+                </Link>
+
                 <div className="flex gap-2 ml-auto">
                   <Badge
                     variant={
@@ -55,10 +60,10 @@ export default async function LessonsPage({
                         : "outline"
                     }
                   >
-                    <p>{lesson.state}</p>
+                    <span>{lesson.state}</span>
                   </Badge>
                   <Link
-                    href={`/admin/courses/${params.courseId}/lessons/${lesson.id}/settings`}
+                    href={`/admin/courses/${params.courseId}/lessons/${lesson.id}/edit`}
                     className={cn(
                       buttonVariants({ variant: "outline" }),
                       "cursor-pointer"

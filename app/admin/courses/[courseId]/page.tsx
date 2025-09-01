@@ -118,7 +118,7 @@ export default async function CoursePage({
                 </span>
               </div>
               <Link
-                href={`/admin/courses/${params.courseId}/settings`}
+                href={`/admin/courses/${params.courseId}/edit`}
                 className={cn(
                   buttonVariants({ variant: "outline" }),
                   "p-2 w-2/3 m-auto"
