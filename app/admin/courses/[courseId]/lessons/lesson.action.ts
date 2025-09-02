@@ -64,3 +64,15 @@ export const lessonActioncreate = authAction
       throw new Error("You must be logged to create lessons");
     }
   });
+
+const saveLessonMoveSchema = z.object({
+  upItemRank: z.string().optional(),
+  downItemRank: z.string().optional(),
+  lessonId: z.string(),
+});
+
+export const saveLessonMove = authAction
+  .inputSchema(saveLessonMoveSchema)
+  .action(async ({ parsedInput, ctx }) => {
+    console.log(parsedInput, ctx);
+  });

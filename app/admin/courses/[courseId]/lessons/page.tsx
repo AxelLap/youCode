@@ -8,12 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Edit, PlusCircle, Trash } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { getLessons } from "../../admin-course.query";
+import { DragAndDropArea } from "./DragAndDropArea";
 
 export default async function LessonsPage({
   params,
@@ -36,47 +36,7 @@ export default async function LessonsPage({
           <CardTitle className="p-2">Lessons</CardTitle>
         </CardHeader>
         <CardContent>
-          {lessons &&
-            lessons.lessons.map((lesson) => (
-              <div
-                key={lesson.id}
-                className="flex w-full gap-4 p-4 m-1 rounded-md items-center hover:bg-black duration-300 transition-easeIn cursor-pointer"
-              >
-                <Link
-                  href={`/admin/courses/${params.courseId}/lessons/${lesson.id}`}
-                >
-                  <span className="w-3/4 overflow-hidden truncate ">
-                    {lesson.name}
-                  </span>
-                </Link>
-
-                <div className="flex gap-2 ml-auto">
-                  <Badge
-                    variant={
-                      lesson.state === "HIDDEN"
-                        ? "destructive"
-                        : lesson.state === "PUBLISHED"
-                        ? "secondary"
-                        : "outline"
-                    }
-                  >
-                    <span>{lesson.state}</span>
-                  </Badge>
-                  <Link
-                    href={`/admin/courses/${params.courseId}/lessons/${lesson.id}/edit`}
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "cursor-pointer"
-                    )}
-                  >
-                    <Edit />
-                  </Link>
-                  <Button className="cursor-pointer" variant="destructive">
-                    <Trash />
-                  </Button>
-                </div>
-              </div>
-            ))}
+          <DragAndDropArea items={lessons.lessons} courseId={params.courseId} />
         </CardContent>
         <CardFooter>
           <Link
