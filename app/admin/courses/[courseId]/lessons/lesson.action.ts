@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { authAction } from "@/lib/safe-action";
 import { z } from "zod";
+import { generateMiddleRank } from "./generateMiddleRank";
 import { LessonFormSchema } from "./lesson.schema";
 
 const LessonActionUpdateProp = z.object({
@@ -45,13 +46,31 @@ const LessonActioncreateProp = z.object({
 export const lessonActioncreate = authAction
   .inputSchema(LessonActioncreateProp)
   .action(async ({ parsedInput, ctx }) => {
+    const lessonsRanks = await prisma.lesson.findMany({
+      where: {
+        courseId: parsedInput.courseId,
+      },
+      select: {
+        rank: true,
+      },
+    });
+
+    console.log(lessonsRanks);
+
+    const latestLessonRank = lessonsRanks.reduce((a, b) =>
+      a.rank > b.rank ? a : b
+    );
+    console.log(latestLessonRank);
+
+    const newRank = generateMiddleRank(latestLessonRank.rank, undefined);
+
     if (ctx.userId) {
       const createdLesson = await prisma.lesson.create({
         data: {
           name: parsedInput.data.name,
           state: parsedInput.data.state,
           content: parsedInput.data.content,
-          rank: "aaaaa",
+          rank: newRank,
           courseId: parsedInput.courseId,
         },
       });
@@ -74,5 +93,28 @@ const saveLessonMoveSchema = z.object({
 export const saveLessonMove = authAction
   .inputSchema(saveLessonMoveSchema)
   .action(async ({ parsedInput, ctx }) => {
-    console.log(parsedInput, ctx);
+    const { upItemRank, downItemRank, lessonId } = parsedInput;
+
+    const lesson = await prisma.lesson.findUnique({
+      where: {
+        id: lessonId,
+      },
+      include: {
+        course: true,
+      },
+    });
+
+    const newRank = generateMiddleRank(upItemRank, downItemRank);
+    if (lesson?.course.creatorId === ctx.userId) {
+      const lessonWithNewRank = await prisma.lesson.update({
+        where: {
+          id: lessonId,
+        },
+        data: {
+          rank: newRank,
+        },
+      });
+
+      return lessonWithNewRank;
+    }
   });

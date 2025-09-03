@@ -26,8 +26,6 @@ export default async function LessonsPage({
 
   const courseName = lessons?.course;
 
-  console.log(lessons);
-
   return (
     <Layout>
       <PageHeader pageName={`Lessons • ${courseName}`} />

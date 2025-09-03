@@ -73,6 +73,9 @@ export async function getLessons(courseId: string) {
           state: true,
           rank: true,
         },
+        orderBy: {
+          rank: "asc",
+        },
       },
     },
   });
