@@ -69,7 +69,6 @@ export const lessonActioncreate = authAction
         data: {
           name: parsedInput.data.name,
           state: parsedInput.data.state,
-          content: parsedInput.data.content,
           rank: newRank,
           courseId: parsedInput.courseId,
         },

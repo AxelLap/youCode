@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getRequiredAuthSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
@@ -42,22 +42,35 @@ export default async function CoursePage({
         </Link>
       </PageHeader>
       <div className="w-full flex flex-col gap-2">
-        <Card>
-          <CardHeader>
-            Status :{" "}
-            <Badge
-              variant={
-                lesson.state === "HIDDEN"
-                  ? "destructive"
-                  : lesson.state === "PUBLISHED"
-                  ? "secondary"
-                  : "outline"
-              }
-            >
-              <span>{lesson.state}</span>
-            </Badge>
-          </CardHeader>
-          <CardContent>{lesson.content}</CardContent>
+        <Card className="w-full ">
+          <CardContent className="flex  gap-3 flex items-center">
+            <div className="flex gap-2">
+              <span>Status : </span>
+              <Badge
+                variant={
+                  lesson.state === "HIDDEN"
+                    ? "destructive"
+                    : lesson.state === "PUBLISHED"
+                    ? "secondary"
+                    : "outline"
+                }
+              >
+                <span>{lesson.state}</span>
+              </Badge>
+            </div>
+            <div className="flex gap-2 ml-auto">
+              <span>Created at :</span>
+              <span>{new Date(lesson.createdAt).toLocaleDateString("fr")}</span>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="w-full">
+          <CardContent className="flex flex-col gap-2">
+            <div className="flex gap-2 flex-col">
+              <span>content : </span>
+              <p>{lesson.content}</p>
+            </div>
+          </CardContent>
         </Card>
       </div>
     </Layout>

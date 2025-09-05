@@ -7,6 +7,7 @@ import { BackButton } from "@/components/features/navigation/BackButton";
 import { Breadcrumbs } from "@/components/features/navigation/Breadcrumbs";
 import { SiteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
+import "@mdxeditor/editor/style.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { PropsWithChildren } from "react";

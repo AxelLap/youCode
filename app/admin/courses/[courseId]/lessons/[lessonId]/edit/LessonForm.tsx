@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/select";
 import { LessonFormSchema } from "../../lesson.schema";
 
-import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { lessonActioncreate, lessonActionUpdate } from "../../lesson.action";
@@ -43,13 +42,12 @@ export const LessonForm = (props: LessonFormProps) => {
     defaultValues: props.defaultValues ?? {
       name: "",
       state: "HIDDEN", // ou une valeur par défaut de ton enum
-      content: "",
     },
   });
 
   return (
     <Form
-      className=" p-4 m-2"
+      className="w-full flex flex-col items-center"
       form={form}
       onSubmit={async (values) => {
         if (props.defaultValues?.id) {
@@ -86,70 +84,47 @@ export const LessonForm = (props: LessonFormProps) => {
         }
       }}
     >
-      <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-2 w-full p-2">
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input type="text" {...field} />
-              </FormControl>
-              <FormDescription>Enter a name for your lesson</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="state"
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-2 w-full p-2">
-              <FormLabel>State</FormLabel>
-              <FormControl>
-                <Select value={field.value} onValueChange={field.onChange}>
-                  <SelectTrigger className="m-auto w-[50%]">
-                    <SelectValue {...field} placeholder="State..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="HIDDEN">Hidden</SelectItem>
-                    <SelectItem value="PUBLISHED">Published</SelectItem>
-                    <SelectItem value="PUBLIC">Public</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormDescription>
-                Select an intial state for your lesson
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="content"
-          render={({ field }) => (
-            <FormItem className="flex flex-col gap-2 w-full p-2">
-              <FormLabel>Content</FormLabel>
-              <FormControl>
-                <Textarea {...field} />
-              </FormControl>
-              <FormDescription>
-                Select an intial state for your lesson
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button
-          className="m-auto w-fit p-2 "
-          variant="outline"
-          size="lg"
-          type="submit"
-        >
+      <FormField
+        control={form.control}
+        name="name"
+        render={({ field }) => (
+          <FormItem className="flex flex-col gap-2 w-full p-2">
+            <FormLabel>Name</FormLabel>
+            <FormControl>
+              <Input type="text" {...field} />
+            </FormControl>
+            <FormDescription>Enter a name for your lesson</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name="state"
+        render={({ field }) => (
+          <FormItem className="flex flex-col gap-2 w-full p-2">
+            <FormLabel>State</FormLabel>
+            <FormControl>
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger className="m-auto w-full">
+                  <SelectValue {...field} placeholder="State..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="HIDDEN">Hidden</SelectItem>
+                  <SelectItem value="PUBLISHED">Published</SelectItem>
+                  <SelectItem value="PUBLIC">Public</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormControl>
+            <FormDescription>
+              Select an intial state for your lesson
+            </FormDescription>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <div className="w-full mt-4 flex justify-center items-center">
+        <Button className="w-[90%]" variant="outline" size="lg" type="submit">
           Submit
         </Button>
       </div>
