@@ -11,6 +11,7 @@ const InitializedMDXEditor = dynamic(() => import("./InitializedMDXEditor"), {
 type MdxEditorProps = {
   markdown: string;
 };
+
 export const MdxEditor = (props: MdxEditorProps) => {
   const [isHydrated, setIsHydrated] = useState(false);
 

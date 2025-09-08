@@ -123,8 +123,8 @@ export const LessonForm = (props: LessonFormProps) => {
           </FormItem>
         )}
       />
-      <div className="w-full mt-4 flex justify-center items-center">
-        <Button className="w-[90%]" variant="outline" size="lg" type="submit">
+      <div className=" w-full mt-4 flex justify-center items-center">
+        <Button className="w-[90%]" variant="secondary" size="lg" type="submit">
           Submit
         </Button>
       </div>

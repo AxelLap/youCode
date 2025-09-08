@@ -7,7 +7,7 @@ export const Layout = (props: ComponentPropsWithoutRef<"div">) => {
     <div
       {...props}
       className={cn(
-        "max-w-3xl flex-wrap w-full flex flex-col gap-4 m-auto px-4 mt-4",
+        "max-w-3xl flex-wrap w-full flex flex-col my-5 mx-auto px-4  ",
         props.className
       )}
     />
@@ -19,7 +19,7 @@ export const LayoutHeader = (props: ComponentPropsWithoutRef<"div">) => {
     <div
       {...props}
       className={cn(
-        "flex items-center justify-start gap-2 w-full md:flex-1",
+        "flex items-center justify-start gap-2 w-full md:flex-1  max-h-fit",
         props.className
       )}
     />
@@ -31,7 +31,7 @@ export const LayoutTitle = (props: ComponentPropsWithoutRef<"h1">) => {
     <Typography
       {...props}
       variant="h2"
-      className={cn(props.className, "w-full p-2 flex")}
+      className={cn(props.className, "w-full p-2 flex ")}
     />
   );
 };

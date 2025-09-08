@@ -1,0 +1,46 @@
+/* mdx-editor.module.css */
+.theme {
+  /* Accent (actions principales, highlights) */
+  --accentBase: color-mix(in oklch, var(--primary));
+  --accentBgSubtle: color-mix(in oklch, var(--primary));
+  --accentBg: color-mix(in oklch, var(--primary));
+  --accentBgHover: color-mix(in oklch, var(--card));
+  --accentBgActive: color-mix(in oklch, var(--primary));
+  --accentLine: color-mix(in oklch, var(--primary));
+  --accentBorder: color-mix(in oklch, var(--primary));
+  --accentBorderHover: color-mix(in oklch, var(--primary));
+  --accentSolid: color-mix(in oklch, var(--primary));
+  --accentSolidHover: var(--primary-foreground);
+  --accentText: var(--primary);
+  --accentTextContrast: var(--primary-foreground);
+
+  /* Base (fond, texte général, bordures) */
+  --baseBase: var(--background);
+  --baseBgSubtle: color-mix(in oklch, var(--muted));
+  --baseBg: var(--card);
+  --baseBgHover: color-mix(in oklch, var(--muted));
+  --baseBgActive: color-mix(in oklch, var(--muted));
+  --baseLine: color-mix(in oklch, var(--ring));
+  --baseBorder: color-mix(in oklch, var(--ring));
+  --baseBorderHover: color-mix(in oklch, var(--ring));
+  --baseSolid: color-mix(in oklch, var(--foreground));
+  --baseSolidHover: var(--foreground);
+  --baseText: var(--foreground);
+  --baseTextContrast: var(--card-foreground);
+
+  /* Admonitions (infos, tips, warnings, etc.) */
+  --admonitionTipBg: color-mix(in oklch, var(--chart-2));
+  --admonitionTipBorder: color-mix(in oklch, var(--chart-2));
+
+  --admonitionInfoBg: color-mix(in oklch, var(--chart-1));
+  --admonitionInfoBorder: color-mix(in oklch, var(--chart-1));
+
+  --admonitionCautionBg: color-mix(in oklch, var(--chart-5));
+  --admonitionCautionBorder: color-mix(in oklch, var(--chart-5));
+
+  --admonitionDangerBg: color-mix(in oklch, var(--destructive));
+  --admonitionDangerBorder: color-mix(in oklch, var(--destructive));
+
+  --admonitionNoteBg: color-mix(in oklch, var(--muted));
+  --admonitionNoteBorder: color-mix(in oklch, var(--border));
+}

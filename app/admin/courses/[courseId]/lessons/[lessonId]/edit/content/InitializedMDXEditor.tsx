@@ -3,26 +3,24 @@
 import {
   BoldItalicUnderlineToggles,
   headingsPlugin,
-  listsPlugin,
   markdownShortcutPlugin,
   MDXEditor,
   quotePlugin,
-  thematicBreakPlugin,
   toolbarPlugin,
   UndoRedo,
   type MDXEditorProps,
 } from "@mdxeditor/editor";
+import styles from "./mdx-editor.module.css";
 
 // Only import this to the next file
 export default function InitializedMDXEditor({ ...props }: MDXEditorProps) {
   return (
     <MDXEditor
-      contentEditableClassName="prose dark:prose-invert !text-foreground bg-black p-1"
+      className={styles.theme}
+      contentEditableClassName="prose dark:prose-invert !text-foreground p-1 mt-5 rounded-lg bg-background"
       plugins={[
         headingsPlugin(),
-        listsPlugin(),
         quotePlugin(),
-        thematicBreakPlugin(),
         markdownShortcutPlugin(),
         toolbarPlugin({
           toolbarContents: () => (
