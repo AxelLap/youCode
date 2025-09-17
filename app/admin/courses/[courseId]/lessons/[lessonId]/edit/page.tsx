@@ -44,7 +44,10 @@ export default async function LessonSettingsPage({
             <span>Content :</span>
           </CardHeader>
           <CardContent>
-            <MdxEditor markdown={lesson.content}></MdxEditor>
+            <MdxEditor
+              lessonId={lesson.id}
+              markdown={lesson.content}
+            ></MdxEditor>
           </CardContent>
         </Card>
       </LayoutContent>

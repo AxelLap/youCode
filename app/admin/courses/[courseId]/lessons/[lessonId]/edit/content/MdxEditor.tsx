@@ -1,8 +1,12 @@
 "use client";
 
-import { Loader } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { useDebounceFn } from "@/hooks/useDebounceFn";
+import { useState } from "react";
+import { toast } from "sonner";
+import { contentActionUpdate } from "../../../lesson.action";
 
 const InitializedMDXEditor = dynamic(() => import("./InitializedMDXEditor"), {
   ssr: false, // 🚀 empêche le rendu côté serveur
@@ -10,25 +14,59 @@ const InitializedMDXEditor = dynamic(() => import("./InitializedMDXEditor"), {
 
 type MdxEditorProps = {
   markdown: string;
+  lessonId: string;
 };
 
-export const MdxEditor = (props: MdxEditorProps) => {
-  const [isHydrated, setIsHydrated] = useState(false);
+type BadgeVariant =
+  | "destructive"
+  | "default"
+  | "secondary"
+  | "outline"
+  | null
+  | undefined;
+type SyncState = "sync" | "syncing" | "not-sync";
+const getBadgeColor = (
+  syncState: SyncState
+): { variant: BadgeVariant; message: string | null } => {
+  if (syncState === "not-sync") {
+    return { variant: "destructive", message: null };
+  }
+  if (syncState === "syncing") {
+    return { variant: "default", message: "saving..." };
+  }
+  return { variant: "secondary", message: "Saved !" };
+};
+export const MdxEditor = ({ lessonId, markdown }: MdxEditorProps) => {
+  const [syncState, setSyncState] = useState<SyncState>("sync");
+  const onChange = useDebounceFn(async (value: string) => {
+    setSyncState("syncing");
+    const { serverError } = await contentActionUpdate({
+      lessonId: lessonId,
+      content: value,
+    });
 
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+    if (serverError) {
+      toast.error(serverError);
+      setSyncState("not-sync");
+      return;
+    }
 
+    setSyncState("sync");
+  });
   return (
-    <>
-      {isHydrated ? (
-        <InitializedMDXEditor markdown={props.markdown}></InitializedMDXEditor>
-      ) : (
-        <div className="w-fit h-fit m-auto flex flex-col gap-2">
-          <Loader className="animate-spin m-auto" />
-          <span>Chargement...</span>
-        </div>
-      )}
-    </>
+    <div className="relative h-full w-full">
+      <div className="absolute bottom-3 right-2 z-4">
+        <Badge variant={getBadgeColor(syncState).variant}>
+          {getBadgeColor(syncState).message}
+        </Badge>
+      </div>
+      <InitializedMDXEditor
+        onChange={(v) => {
+          setSyncState("not-sync");
+          onChange(v);
+        }}
+        markdown={markdown}
+      />
+    </div>
   );
 };

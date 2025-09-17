@@ -124,3 +124,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+.mdxeditor {
+  padding: 2px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.mdxeditor-toolbar {
+  justify-content: center;
+  display: flex;
+}
+.mdxeditor-root-contenteditable {
+  min-height: 100px;
+  width: 100%;
+}

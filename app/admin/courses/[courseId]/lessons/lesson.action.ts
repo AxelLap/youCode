@@ -117,3 +117,38 @@ export const saveLessonMove = authAction
       return lessonWithNewRank;
     }
   });
+
+const ContentActionUpdateProp = z.object({
+  lessonId: z.string(),
+  content: z.string(),
+});
+
+export const contentActionUpdate = authAction
+  .inputSchema(ContentActionUpdateProp)
+  .action(async ({ parsedInput, ctx }) => {
+    const lesson = await prisma.lesson.findUnique({
+      where: {
+        id: parsedInput.lessonId,
+      },
+      include: {
+        course: true,
+      },
+    });
+    if (lesson?.course.creatorId === ctx.userId) {
+      const updatedLesson = await prisma.lesson.update({
+        where: {
+          id: parsedInput.lessonId,
+        },
+        data: {
+          content: parsedInput.content,
+        },
+      });
+      return {
+        message: "Lesson successfully updated !",
+        lesson: updatedLesson,
+        courseId: lesson?.course.id,
+      };
+    } else {
+      throw new Error("You are not authorized to update this lesson");
+    }
+  });
