@@ -1,3 +1,4 @@
+import { ImageCourse } from "@/components/features/courses/ImageCourse";
 import { UserAvatar } from "@/components/features/images/UserAvatar";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { Typography } from "@/components/ui/Typography";
@@ -30,11 +31,7 @@ export default async function CoursePage({
       <LayoutContent className="flex flex-row gap-[2%]">
         <div className="flex flex-col w-[55%] h-full gap-4">
           <Card className="w-full h-[40%] flex flex-row gap-0 ltr p-0 items-center">
-            <img
-              alt="course illustration Image"
-              src={course?.image}
-              className="w-[45%] h-[200px] rounded-l-md object-cover"
-            />
+            <ImageCourse url={course?.image} />
             <div className="w-[40%] mx-auto flex flex-col items-center gap-4 py-3">
               <Typography variant={"h3"} as={"h2"} className="text-center">
                 {course?.name}
