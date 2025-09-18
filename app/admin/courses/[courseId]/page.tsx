@@ -1,8 +1,7 @@
-import { UserAvatar } from "@/components/features/images/UserAvatar";
 import { PaginationBtn } from "@/components/features/navigation/PaginationButn";
 import { Layout } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -14,10 +13,10 @@ import {
 } from "@/components/ui/table";
 import { getRequiredAuthSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
 import Link from "next/link";
 import { getAdminCourse } from "../admin-course.query";
 import Error from "../error";
+import { UserRow } from "./UserRow";
 
 export default async function CoursePage({
   params,
@@ -63,19 +62,12 @@ export default async function CoursePage({
                 </TableHeader>
                 <TableBody>
                   {course._count?.users !== 0 ? (
-                    course.users?.map((couseUser) => (
-                      <TableRow key={couseUser.id}>
-                        <TableCell>
-                          <UserAvatar imageUrl={couseUser.image} />
-                        </TableCell>
-                        <TableCell>{couseUser.name}</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="outline">
-                            <Menu />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
+                    course.users?.map((courseUser) => (
+                      <UserRow
+                        key={courseUser.id}
+                        courseUser={courseUser}
+                        courseId={params.courseId}
+                      />
                     ))
                   ) : (
                     <TableRow>

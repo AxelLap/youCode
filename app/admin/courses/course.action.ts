@@ -52,3 +52,40 @@ export const courseActionCreate = authAction
     });
     return { message: "Successfully updated", course: course };
   });
+
+const RemoveUserProps = z.object({
+  courseId: z.string(),
+  userId: z.string(),
+});
+
+export const removeUser = authAction
+  .inputSchema(RemoveUserProps)
+  .action(async ({ parsedInput, ctx }) => {
+    const courseOnUser = await prisma.courseOnUser.findUnique({
+      where: {
+        userId_courseId: {
+          userId: parsedInput.userId,
+          courseId: parsedInput.courseId,
+        },
+      },
+      include: {
+        user: true,
+        course: true,
+      },
+    });
+    if (courseOnUser?.course.creatorId === ctx.userId) {
+      await prisma.courseOnUser.delete({
+        where: {
+          userId_courseId: {
+            userId: parsedInput.userId,
+            courseId: parsedInput.courseId,
+          },
+        },
+      });
+      return `${courseOnUser?.user.name} successfully removed from ${courseOnUser?.course.name}`;
+    } else {
+      throw new Error(
+        "You must be the owner of this course to remove a member"
+      );
+    }
+  });
