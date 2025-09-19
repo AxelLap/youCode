@@ -4,9 +4,12 @@ import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { Typography } from "@/components/ui/Typography";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
-import { Star, StarOff } from "lucide-react";
+import Error from "../../../admin/courses/error";
+import { isCourseMember } from "../user-course.query";
+import { JoinCourseBtn } from "./JoinCourseBtn";
 
 export default async function CoursePage({
   params,
@@ -14,6 +17,19 @@ export default async function CoursePage({
   params: Promise<{ courseId: string }>;
 }) {
   const { courseId } = await params;
+
+  const session = await getAuthSession();
+
+  const userId = session?.user.id;
+
+  if (!userId) {
+    return <Error />;
+  }
+
+  const isMember = await isCourseMember({
+    courseId: courseId,
+    userId: userId,
+  });
 
   const course = await prisma.course.findUnique({
     where: {
@@ -58,41 +74,50 @@ export default async function CoursePage({
               lessons :
             </Typography>
           </CardHeader>
-          <CardContent className="p-0 flex flex-col gap-4">
-            {course?.lessons.length !== 0 ? (
-              course?.lessons.map((lesson) => (
-                <div
-                  key={lesson.id}
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "flex justify-between h-10 p-2 w-full rounded-md items-center gap-2 p-1"
-                  )}
-                >
-                  <Typography className="flex w-1/2 items-center" as={"p"}>
-                    {lesson.name}
-                  </Typography>
-                  <span className="flex gap-1">
-                    {lesson?.rank &&
-                      Array.from(lesson.rank).map((r) =>
-                        r === "a" ? (
-                          <Star key={Math.random()} />
-                        ) : (
-                          <StarOff key={Math.random()} />
-                        )
+          {isMember ? (
+            <CardContent className="p-0 flex flex-col gap-2">
+              {course?.lessons.length !== 0 ? (
+                course?.lessons.map((lesson, index) => (
+                  <div className="w-full flex mx-2 p-1 gap-4" key={lesson.id}>
+                    <span
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "flex justify-center h-10 p-2 w-fit rounded-md items-center p-3"
                       )}
-                  </span>
+                    >
+                      {index + 1}
+                    </span>
+                    <div
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "flex justify-center h-10 p-2 w-[60%] rounded-md items-center gap-2 p-1"
+                      )}
+                    >
+                      <Typography
+                        className="flex w-fit items-center text-center"
+                        as={"p"}
+                      >
+                        {lesson.name}
+                      </Typography>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="flex flex-col gap-4 w-full justify-center items-center">
+                  <Typography as={"span"}>
+                    No lessons created yet please come back later
+                  </Typography>
                 </div>
-              ))
-            ) : (
-              <div className="flex flex-col gap-4 w-full justify-center items-center">
-                <Typography as={"span"}>
-                  No lessons created yet please come back later
-                </Typography>
-              </div>
-            )}
-          </CardContent>
+              )}
+            </CardContent>
+          ) : (
+            <span className="w-fit m-auto">
+              Please join the course to unlock lessons
+            </span>
+          )}
         </Card>
       </LayoutContent>
+      {!isMember && <JoinCourseBtn courseId={courseId} />}
     </Layout>
   );
 }
