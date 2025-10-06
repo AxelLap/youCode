@@ -20,6 +20,10 @@ export default async function CoursePage({
 
   const session = await getAuthSession();
 
+  await new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
+
   const userId = session?.user.id;
 
   if (!userId) {
@@ -82,7 +86,7 @@ export default async function CoursePage({
                     <span
                       className={cn(
                         buttonVariants({ variant: "outline" }),
-                        "flex justify-center h-10 p-2 w-fit rounded-md items-center p-3"
+                        "flex justify-center h-10 p-2 w-fit rounded-md items-center "
                       )}
                     >
                       {index + 1}
@@ -90,7 +94,7 @@ export default async function CoursePage({
                     <div
                       className={cn(
                         buttonVariants({ variant: "outline" }),
-                        "flex justify-center h-10 p-2 w-[60%] rounded-md items-center gap-2 p-1"
+                        "flex justify-center h-10 p-2 w-[60%] rounded-md items-center gap-2"
                       )}
                     >
                       <Typography
