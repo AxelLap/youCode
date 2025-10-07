@@ -22,10 +22,10 @@ export function Header() {
             src="/logo.svg"
             alt="Youcode Logo"
           />
-          <Typography as={Link} href="/explorer">
+          <Typography as={Link} href="/courses">
             Explorer
           </Typography>
-          <Typography as={Link} href="/explorer/courses">
+          <Typography as={Link} href="/mycourses">
             My courses
           </Typography>
         </div>

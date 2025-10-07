@@ -21,9 +21,12 @@ export const metadata: Metadata = {
   description: SiteConfig.description,
 };
 
-export default function RootLayout(
-  props: PropsWithChildren<{ modal?: ReactNode }>
-) {
+export default function RootLayout({
+  children,
+  modal,
+}: PropsWithChildren<{
+  modal?: ReactNode;
+}>) {
   return (
     <>
       <html lang="en" className="h-full" suppressHydrationWarning>
@@ -36,10 +39,8 @@ export default function RootLayout(
                 <Breadcrumbs />
                 <BackButton />
               </div>
-              <div className="flex-1">
-                {props.children}
-                {props.modal}
-              </div>
+              <div className="flex-1">{children}</div>
+              {modal}
               <Footer />
             </div>
             <TailwindIndicator />

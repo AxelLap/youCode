@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
-import Error from "../../../admin/courses/error";
+import Error from "../../admin/courses/error";
 import { isCourseMember } from "../user-course.query";
 import { JoinCourseBtn } from "./JoinCourseBtn";
 
@@ -19,11 +19,6 @@ export default async function CoursePage({
   const { courseId } = await params;
 
   const session = await getAuthSession();
-
-  await new Promise((resolve) => {
-    setTimeout(resolve, 5000);
-  });
-
   const userId = session?.user.id;
 
   if (!userId) {

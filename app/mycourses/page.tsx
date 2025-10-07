@@ -22,7 +22,7 @@ export default async function CoursesPage() {
   });
 
   return (
-    <Layout className="max-w-[90%] ">
+    <Layout className="max-w-[90%]">
       <PageHeader pageName="My courses" />
       <LayoutContent>
         <CoursesWrapper>

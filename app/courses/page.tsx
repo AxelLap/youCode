@@ -43,7 +43,7 @@ export default async function ExplorerPage({
       </CoursesWrapper>
 
       <PaginationBtn
-        baseUrl="/explorer"
+        baseUrl="/courses"
         entriesPerPAge={9}
         totalEntries={entries}
         page={page}
