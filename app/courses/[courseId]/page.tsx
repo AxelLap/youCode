@@ -2,14 +2,13 @@ import { ImageCourse } from "@/components/features/courses/ImageCourse";
 import { UserAvatar } from "@/components/features/images/UserAvatar";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { Typography } from "@/components/ui/Typography";
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { cn } from "@/lib/utils";
 import Error from "../../admin/courses/error";
 import { isCourseMember } from "../user-course.query";
 import { JoinCourseBtn } from "./JoinCourseBtn";
+import { LessonList } from "./LessonsList";
 
 export default async function CoursePage({
   params,
@@ -35,7 +34,6 @@ export default async function CoursePage({
       id: courseId,
     },
     include: {
-      lessons: true,
       users: true,
       creator: true,
     },
@@ -67,54 +65,7 @@ export default async function CoursePage({
             </CardContent>
           </Card>
         </div>
-        <Card className=" w-[45%] flex flex-col gap-4 p-3">
-          <CardHeader>
-            <Typography as={"h3"} variant={"h3"}>
-              lessons :
-            </Typography>
-          </CardHeader>
-          {isMember ? (
-            <CardContent className="p-0 flex flex-col gap-2">
-              {course?.lessons.length !== 0 ? (
-                course?.lessons.map((lesson, index) => (
-                  <div className="w-full flex mx-2 p-1 gap-4" key={lesson.id}>
-                    <span
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "flex justify-center h-10 p-2 w-fit rounded-md items-center "
-                      )}
-                    >
-                      {index + 1}
-                    </span>
-                    <div
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "flex justify-center h-10 p-2 w-[60%] rounded-md items-center gap-2"
-                      )}
-                    >
-                      <Typography
-                        className="flex w-fit items-center text-center"
-                        as={"p"}
-                      >
-                        {lesson.name}
-                      </Typography>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="flex flex-col gap-4 w-full justify-center items-center">
-                  <Typography as={"span"}>
-                    No lessons created yet please come back later
-                  </Typography>
-                </div>
-              )}
-            </CardContent>
-          ) : (
-            <span className="w-fit m-auto">
-              Please join the course to unlock lessons
-            </span>
-          )}
-        </Card>
+        <LessonList isMember={isMember} courseId={courseId} />
       </LayoutContent>
       {!isMember && <JoinCourseBtn courseId={courseId} />}
     </Layout>
