@@ -71,6 +71,7 @@ export const lessonActioncreate = authAction
           state: parsedInput.data.state,
           rank: newRank,
           courseId: parsedInput.courseId,
+          content: "",
         },
       });
       return {
