@@ -40,9 +40,9 @@ export default async function CoursePage({
   });
 
   return (
-    <Layout className="min-h-[60vh] max-w-[90%]">
-      <LayoutContent className="flex flex-row gap-[2%]">
-        <div className="flex flex-col w-[55%] h-full gap-4">
+    <Layout>
+      <LayoutContent className="flex flex-row gap-[2%] justify-center ">
+        <div className="flex flex-col w-[55%] h-full gap-4 ">
           <Card className="w-full h-[40%] flex flex-row gap-0 ltr p-0 items-center">
             <ImageCourse url={course?.image} />
             <div className="w-[40%] mx-auto flex flex-col items-center gap-4 py-3">

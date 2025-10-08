@@ -45,6 +45,10 @@ export default async function LessonPage({
     return <Error />;
   }
 
+  await new Promise((resolve) => {
+    setTimeout(resolve, 5000);
+  });
+
   return (
     <Layout className="min-h-[60vh] max-w-[90%]">
       <LayoutContent className="flex flex-row gap-2">
