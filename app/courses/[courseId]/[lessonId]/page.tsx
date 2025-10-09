@@ -1,11 +1,12 @@
-import { Layout, LayoutContent } from "@/components/layout/Layout";
-import { Typography } from "@/components/ui/Typography";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Layout } from "@/components/layout/Layout";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Error from "../../../admin/courses/error";
 import { isCourseMember } from "../../user-course.query";
+
+import { SideBarWrapper } from "@/components/layout/SidebarWrapper";
 import { LessonList } from "../LessonsList";
+import { LessonContent } from "./LessonContent";
 
 export default async function LessonPage({
   params,
@@ -14,63 +15,43 @@ export default async function LessonPage({
 }) {
   const { lessonId, courseId } = await params;
 
+  // Auth
   const session = await getAuthSession();
   const userId = session?.user.id;
+  if (!userId) return <Error />;
 
-  if (!userId) {
-    return <Error />;
-  }
+  // Membership
+  const isMember = await isCourseMember({ courseId, userId });
 
-  const isMember = await isCourseMember({
-    courseId: courseId,
-    userId: userId,
-  });
-
-  const rawLesson = await prisma.course.findUnique({
-    where: {
-      id: courseId,
-    },
+  // Fetch course + lessons
+  const course = await prisma.course.findUnique({
+    where: { id: courseId },
     select: {
-      lessons: {
-        where: {
-          id: lessonId,
-        },
-      },
+      lessons: true,
     },
   });
 
-  const lesson = rawLesson?.lessons[0];
+  if (!course) return <Error />;
 
-  if (!isMember && lesson?.state !== "PUBLIC") {
-    return <Error />;
-  }
+  const lessons = course.lessons;
+  const lesson = lessons.find((l) => l.id === lessonId);
 
-  await new Promise((resolve) => {
-    setTimeout(resolve, 5000);
-  });
+  if (!lesson || (!isMember && lesson.state !== "PUBLIC")) return <Error />;
 
   return (
     <Layout className="min-h-[60vh] max-w-[90%]">
-      <LayoutContent className="flex flex-row gap-2">
-        <Card className="w-3/4 flex flex-col gap-2">
-          <CardHeader>
-            <CardTitle>
-              <Typography variant={"h3"} as={"h2"} className="text-center">
-                {lesson?.name}
-              </Typography>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Typography as={"p"}>{lesson?.content}</Typography>
-          </CardContent>
-        </Card>
-
-        <LessonList
-          courseId={courseId}
-          isMember={isMember}
-          lessonId={lessonId}
-        ></LessonList>
-      </LayoutContent>
+      <SideBarWrapper
+        sidebarContent={
+          <LessonList
+            lessons={lessons}
+            courseId={courseId}
+            isMember={isMember}
+            lessonId={lessonId}
+          />
+        }
+      >
+        <LessonContent name={lesson.name} content={lesson.content} />
+      </SideBarWrapper>
     </Layout>
   );
 }

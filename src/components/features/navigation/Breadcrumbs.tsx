@@ -9,7 +9,7 @@ export const Breadcrumbs = () => {
   const segments = pathName?.split("/").slice(1);
 
   return (
-    <div className="flex w-[80%] item-center mx-auto mt-3">
+    <div className="flex w-[80%] item-center ">
       <Link className="text-blue-200 hover:underline" href="/">
         Home
       </Link>
