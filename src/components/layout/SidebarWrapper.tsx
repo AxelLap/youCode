@@ -15,9 +15,9 @@ export const SideBarWrapper = ({
 }: PropsWithChildren<SideBarWrapperProps>) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="absolute h-screen w-screen top-0 left-0 ">
+    <div className="absolute h-screen w-screen top-0 left-0 z-0">
       <Button
-        variant="ghost"
+        variant={isOpen ? "outline" : "ghost"}
         className="absolute top-19 left-5"
         onClick={() => setIsOpen((state) => !state)}
       >

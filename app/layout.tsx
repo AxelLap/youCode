@@ -35,7 +35,7 @@ export default function RootLayout({
           <Providers>
             <div className="relative flex min-h-screen flex-col">
               <Header />
-              <div className="flex justify-between items-center w-[90%] my-2 px-4  mx-auto">
+              <div className="flex justify-between items-center w-[90%] my-2 px-4 z-1 mx-auto">
                 <Breadcrumbs />
                 <BackButton />
               </div>
