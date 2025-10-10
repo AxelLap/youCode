@@ -23,11 +23,19 @@ export default async function LessonPage({
   // Membership
   const isMember = await isCourseMember({ courseId, userId });
 
-  // Fetch course + lessons
+  // Fetch course + lessons + lessonOnUser
   const course = await prisma.course.findUnique({
     where: { id: courseId },
     select: {
-      lessons: true,
+      lessons: {
+        include: {
+          users: {
+            where: {
+              userId: userId,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -50,7 +58,12 @@ export default async function LessonPage({
           />
         }
       >
-        <LessonContent name={lesson.name} content={lesson.content} />
+        <LessonContent
+          name={lesson.name}
+          content={lesson.content}
+          lessonId={lesson.id}
+          userId={userId}
+        />
       </SideBarWrapper>
     </Layout>
   );

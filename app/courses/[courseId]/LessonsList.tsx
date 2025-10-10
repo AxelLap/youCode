@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Typography } from "@/components/ui/Typography";
 import { cn } from "@/lib/utils";
+import { Progress } from "@prisma/client";
 import Link from "next/link";
 import { LessonLink } from "./LessonLink";
 
@@ -12,6 +13,9 @@ type LessonListProps = {
     id: string;
     name: string;
     state: string;
+    users: {
+      progress: Progress;
+    }[];
   }[];
   courseId: string;
   isMember: boolean;
@@ -42,6 +46,7 @@ export const LessonList = ({
                   isAvailable={isMember || lesson.state === "PUBLIC"}
                   name={lesson.name}
                   index={index}
+                  progress={lesson.users[0].progress}
                 >
                   <Link
                     className={cn(

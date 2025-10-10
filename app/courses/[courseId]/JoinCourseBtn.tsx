@@ -26,7 +26,7 @@ export const JoinCourseBtn = ({ courseId }: JoinCourseBtnProps) => {
           router.refresh();
         }
       }}
-      className="w-fit p-4 m-auto"
+      className="w-fit p-4 mx-auto my-4"
       variant="secondary"
     >
       Join this class

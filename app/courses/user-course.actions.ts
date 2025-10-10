@@ -36,5 +36,27 @@ export const courseOnUserActionCreate = authAction
         createdAt: new Date(),
       },
     });
+
+    const lessonsToAddForUser = await prisma.course.findUnique({
+      where: {
+        id: parsedInput.courseId,
+      },
+      select: {
+        lessons: true,
+      },
+    });
+
+    if (lessonsToAddForUser?.lessons) {
+      for (const lesson of lessonsToAddForUser.lessons) {
+        await prisma.lessonOnUser.create({
+          data: {
+            userId: ctx.userId,
+            lessonId: lesson.id,
+            progress: "NOT_STARTED",
+          },
+        });
+      }
+    }
+
     return { message: "Successfully joined the course" };
   });

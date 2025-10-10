@@ -36,11 +36,27 @@ export default async function CoursePage({
     include: {
       users: true,
       creator: true,
-      lessons: true,
+      lessons: {
+        include: {
+          users: {
+            where: {
+              userId: userId,
+            },
+            select: {
+              progress: true,
+              lessonId: true,
+            },
+          },
+        },
+      },
     },
   });
 
   const lessons = course?.lessons;
+
+  if (!lessons) {
+    return;
+  }
 
   return (
     <Layout className="max-w-[80%]">

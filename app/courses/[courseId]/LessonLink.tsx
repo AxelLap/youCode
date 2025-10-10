@@ -1,6 +1,8 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Progress } from "@prisma/client";
+
 import { LockIcon } from "lucide-react";
 import { PropsWithChildren, ReactNode } from "react";
 type LessonLinkProps = {
@@ -8,6 +10,7 @@ type LessonLinkProps = {
   children: ReactNode;
   name: string;
   index: number;
+  progress: Progress;
 };
 export const LessonLink = ({
   isAvailable,
@@ -17,11 +20,11 @@ export const LessonLink = ({
 }: PropsWithChildren<LessonLinkProps>) => {
   if (isAvailable) {
     return (
-      <div className="w-full flex mx-2 gap-4 justify-center">
+      <div className="w-full flex mx-2 gap-4 justify-center relative">
         <span
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "flex justify-center h-10 p-2 w-[20%] rounded-md items-center "
+            "flex justify-center h-10 p-2 w-[20%] rounded-md items-center relative"
           )}
         >
           {index + 1}
