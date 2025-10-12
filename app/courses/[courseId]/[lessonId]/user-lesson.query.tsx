@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-import { Progress } from "@prisma/client";
 
 type GetLessonOnUserProgressProps = {
   userId: string;
@@ -22,34 +21,4 @@ export async function getLessonOnUserProgress({
     },
   });
   return progress;
-}
-
-type updateLessonProgressProps = {
-  userId: string;
-  lessonId: string;
-  progress: Progress;
-};
-
-export async function updateLessonProgress({
-  userId,
-  lessonId,
-  progress,
-}: updateLessonProgressProps) {
-  const updatedProgression = await prisma.lessonOnUser.update({
-    where: {
-      userId_lessonId: {
-        userId: userId,
-        lessonId: lessonId,
-      },
-    },
-    data: {
-      progress: progress,
-    },
-  });
-
-  if (!updatedProgression) {
-    throw new Error("Error while lesson on user updating");
-  }
-
-  return updatedProgression;
 }

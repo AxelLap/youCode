@@ -44,6 +44,8 @@ export default async function LessonPage({
   const lessons = course.lessons;
   const lesson = lessons.find((l) => l.id === lessonId);
 
+  console.log(lessons);
+
   if (!lesson || (!isMember && lesson.state !== "PUBLIC")) return <Error />;
 
   return (

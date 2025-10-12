@@ -1,24 +1,37 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@prisma/client";
 import { Crown, Hourglass } from "lucide-react";
-import { updateLessonProgress } from "./user-lesson.query";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { updateLessonProgress } from "./user-lesson.action";
 
 type UpdateProgressBtnProps = {
   progress: Progress;
-  userId: string;
   lessonId: string;
 };
 
 export const UpdateProgressBtn = ({
   progress,
-  userId,
+
   lessonId,
 }: UpdateProgressBtnProps) => {
+  const router = useRouter();
   if (progress === "COMPLETED") {
     return (
       <Button
-        onClick={() => {
-          updateLessonProgress({ userId, lessonId, progress: "COMPLETED" });
+        onClick={async () => {
+          const updatedLesson = await updateLessonProgress({
+            lessonId,
+            progress: "IN_PROGRESS",
+          });
+
+          if (!updatedLesson) {
+            throw new Error("Something went wrong");
+          } else {
+            toast("lesson marked as in progress");
+            router.refresh();
+          }
         }}
         className="w-fit flex gap-2 h-8 absolute rounded-full right-10 -bottom-12"
       >
@@ -29,12 +42,16 @@ export const UpdateProgressBtn = ({
   } else {
     return (
       <Button
-        onClick={() => {
-          updateLessonProgress({
-            userId,
+        onClick={async () => {
+          const updatedLesson = await updateLessonProgress({
             lessonId,
-            progress: "IN_PROGRESS",
+            progress: "COMPLETED",
           });
+          if (!updatedLesson) {
+            throw new Error("Something went wrong");
+          } else {
+            toast("lesson completed");
+          }
         }}
         className="w-fit flex gap-2 h-8 absolute rounded-full right-10 -bottom-12"
       >
