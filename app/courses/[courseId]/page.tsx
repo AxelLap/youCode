@@ -48,6 +48,9 @@ export default async function CoursePage({
             },
           },
         },
+        orderBy: {
+          rank: "asc",
+        },
       },
     },
   });

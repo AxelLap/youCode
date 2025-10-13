@@ -55,14 +55,14 @@ export const lessonActioncreate = authAction
       },
     });
 
-    console.log(lessonsRanks);
+    const latestLessonRank =
+      lessonsRanks.length !== 0
+        ? lessonsRanks.reduce((a, b) => (a.rank > b.rank ? a : b))
+        : null;
 
-    const latestLessonRank = lessonsRanks.reduce((a, b) =>
-      a.rank > b.rank ? a : b
-    );
-    console.log(latestLessonRank);
-
-    const newRank = generateMiddleRank(latestLessonRank.rank, undefined);
+    const newRank = latestLessonRank
+      ? generateMiddleRank(latestLessonRank.rank, undefined)
+      : "aaaaaa";
 
     if (ctx.userId) {
       const createdLesson = await prisma.lesson.create({
@@ -79,8 +79,6 @@ export const lessonActioncreate = authAction
         lesson: createdLesson,
         courseId: parsedInput.courseId,
       };
-    } else {
-      throw new Error("You must be logged to create lessons");
     }
   });
 
