@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 type CourseImageProps = {
@@ -9,10 +8,9 @@ type CourseImageProps = {
 
 export const ImageCourse = ({ url }: CourseImageProps) => {
   const [imgSrc, setImgSrc] = useState(url || "/placeholder.webp");
-  console.log(url);
 
   return (
-    <Image
+    <img
       alt="course illustration"
       src={imgSrc}
       width={400}
