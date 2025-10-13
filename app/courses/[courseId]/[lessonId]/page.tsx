@@ -7,6 +7,7 @@ import { isCourseMember } from "../../user-course.query";
 import { SideBarWrapper } from "@/components/layout/SidebarWrapper";
 import { LessonList } from "../LessonsList";
 import { LessonContent } from "./LessonContent";
+import { UpdateProgressBtn } from "./UpdateProgressBtn";
 
 export default async function LessonPage({
   params,
@@ -35,6 +36,9 @@ export default async function LessonPage({
             },
           },
         },
+        orderBy: {
+          rank: "asc",
+        },
       },
     },
   });
@@ -43,10 +47,10 @@ export default async function LessonPage({
 
   const lessons = course.lessons;
   const lesson = lessons.find((l) => l.id === lessonId);
-
-  console.log(lessons);
-
   if (!lesson || (!isMember && lesson.state !== "PUBLIC")) return <Error />;
+
+  const nextLessonId = lessons.find((l) => l.rank > lesson?.rank)?.id;
+  console.log(`NextLessonId : ${nextLessonId}`);
 
   return (
     <Layout className="min-h-[60vh] max-w-[90%]">
@@ -65,7 +69,16 @@ export default async function LessonPage({
           content={lesson.content}
           lessonId={lesson.id}
           userId={userId}
-        />
+        >
+          {lesson.users.length !== 0 && (
+            <UpdateProgressBtn
+              progress={lesson.users[0].progress}
+              lessonId={lessonId}
+              nextLessonId={nextLessonId}
+              courseId={courseId}
+            />
+          )}
+        </LessonContent>
       </SideBarWrapper>
     </Layout>
   );

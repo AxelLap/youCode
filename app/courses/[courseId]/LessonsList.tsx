@@ -46,7 +46,11 @@ export const LessonList = ({
                   isAvailable={isMember || lesson.state === "PUBLIC"}
                   name={lesson.name}
                   index={index}
-                  progress={lesson.users[0].progress}
+                  progress={
+                    lesson.users.length !== 0
+                      ? lesson.users[0].progress
+                      : undefined
+                  }
                 >
                   <Link
                     className={cn(
@@ -55,7 +59,7 @@ export const LessonList = ({
                           ? { variant: "secondary" }
                           : { variant: "outline" }
                       ),
-                      "flex justify-center h-10 p-2 w-[80%] rounded-md items-center gap-2 truncate"
+                      "flex justify-start h-10 p-2 w-[80%] rounded-md items-center gap-2 truncate overflow-hidden"
                     )}
                     href={`/courses/${courseId}/${lesson.id}`}
                   >

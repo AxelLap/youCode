@@ -3,20 +3,21 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Progress } from "@prisma/client";
 
-import { LockIcon } from "lucide-react";
+import { Crown, Hourglass, LockIcon } from "lucide-react";
 import { PropsWithChildren, ReactNode } from "react";
 type LessonLinkProps = {
   isAvailable: boolean;
   children: ReactNode;
   name: string;
   index: number;
-  progress: Progress;
+  progress?: Progress;
 };
 export const LessonLink = ({
   isAvailable,
   name,
   index,
   children,
+  progress,
 }: PropsWithChildren<LessonLinkProps>) => {
   if (isAvailable) {
     return (
@@ -27,7 +28,13 @@ export const LessonLink = ({
             "flex justify-center h-10 p-2 w-[20%] rounded-md items-center relative"
           )}
         >
-          {index + 1}
+          {progress === "COMPLETED" ? (
+            <Crown />
+          ) : progress === "IN_PROGRESS" ? (
+            <Hourglass />
+          ) : (
+            <span>{index + 1}</span>
+          )}
         </span>
         {children}
       </div>
@@ -38,7 +45,7 @@ export const LessonLink = ({
         <span
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "flex justify-center h-10 p-2 w-[20%] rounded-md items-center "
+            "flex justify-center h-10 p-2 w-[20%] rounded-md items-center"
           )}
         >
           <LockIcon />
@@ -48,7 +55,7 @@ export const LessonLink = ({
             buttonVariants({
               variant: "ghost",
             }),
-            "flex justify-center h-10 p-2 w-[80%] rounded-md items-center gap-2 cursor-not-allowed"
+            "flex justify-start h-10 p-2 w-[80%] rounded-md items-center gap-2 overflow-hidden truncate cursor-not-allowed"
           )}
         >
           {name}

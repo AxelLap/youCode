@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Typography } from "@/components/ui/Typography";
-import { toast } from "sonner";
-import Error from "../../../admin/courses/error";
-import { UpdateProgressBtn } from "./UpdateProgressBtn";
+
+import { PropsWithChildren } from "react";
 import { updateLessonProgress } from "./user-lesson.action";
 import { getLessonOnUserProgress } from "./user-lesson.query";
 
@@ -18,23 +17,18 @@ export const LessonContent = async ({
   content,
   lessonId,
   userId,
-}: LessonContentProps) => {
+  children,
+}: PropsWithChildren<LessonContentProps>) => {
   const progress = await getLessonOnUserProgress({ userId, lessonId });
 
-  if (!progress) {
-    return <Error />;
-  }
-
-  if (progress?.progress === "NOT_STARTED") {
-    const lessonStarted = await updateLessonProgress({
-      lessonId,
-      progress: "IN_PROGRESS",
-    });
-    if (lessonStarted) {
-      toast("Lesson started !");
+  if (progress) {
+    if (progress?.progress === "NOT_STARTED") {
+      await updateLessonProgress({
+        lessonId,
+        progress: "IN_PROGRESS",
+      });
     }
   }
-  console.log(lessonId);
 
   return (
     <Card className="w-full mx-auto flex flex-col gap-2 relative">
@@ -47,7 +41,7 @@ export const LessonContent = async ({
       </CardHeader>
       <CardContent>
         <Typography as={"p"}>{content}</Typography>
-        <UpdateProgressBtn lessonId={lessonId} progress={progress.progress} />
+        {children}
       </CardContent>
     </Card>
   );

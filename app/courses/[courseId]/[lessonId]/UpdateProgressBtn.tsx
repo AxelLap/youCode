@@ -9,12 +9,15 @@ import { updateLessonProgress } from "./user-lesson.action";
 type UpdateProgressBtnProps = {
   progress: Progress;
   lessonId: string;
+  courseId: string;
+  nextLessonId: string | undefined;
 };
 
 export const UpdateProgressBtn = ({
   progress,
-
   lessonId,
+  nextLessonId,
+  courseId,
 }: UpdateProgressBtnProps) => {
   const router = useRouter();
   if (progress === "COMPLETED") {
@@ -29,8 +32,9 @@ export const UpdateProgressBtn = ({
           if (!updatedLesson) {
             throw new Error("Something went wrong");
           } else {
-            toast("lesson marked as in progress");
+            router.push(`/courses/${courseId}/${lessonId}`);
             router.refresh();
+            toast("lesson marked as in progress");
           }
         }}
         className="w-fit flex gap-2 h-8 absolute rounded-full right-10 -bottom-12"
@@ -50,7 +54,12 @@ export const UpdateProgressBtn = ({
           if (!updatedLesson) {
             throw new Error("Something went wrong");
           } else {
-            toast("lesson completed");
+            if (nextLessonId) {
+              router.push(`/courses/${courseId}/${nextLessonId}`);
+              toast("lesson completed");
+            } else {
+              router.push(`/mycourses`);
+            }
           }
         }}
         className="w-fit flex gap-2 h-8 absolute rounded-full right-10 -bottom-12"
