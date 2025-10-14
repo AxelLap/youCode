@@ -1,4 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Typography } from "@/components/ui/Typography";
 
 import { PropsWithChildren } from "react";
@@ -31,7 +37,7 @@ export const LessonContent = async ({
   }
 
   return (
-    <Card className="w-full mx-auto flex flex-col gap-2 relative">
+    <Card className="w-full h-fit mx-auto flex flex-col gap-4">
       <CardHeader>
         <CardTitle>
           <Typography variant={"h3"} as={"h2"} className="text-center">
@@ -39,10 +45,10 @@ export const LessonContent = async ({
           </Typography>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-fit p-4 my-2 ">
         <Typography as={"p"}>{content}</Typography>
-        {children}
       </CardContent>
+      <CardFooter>{children}</CardFooter>
     </Card>
   );
 };

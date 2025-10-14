@@ -53,33 +53,35 @@ export default async function LessonPage({
   console.log(`NextLessonId : ${nextLessonId}`);
 
   return (
-    <Layout className="min-h-[60vh] max-w-[90%]">
-      <SideBarWrapper
-        sidebarContent={
-          <LessonList
-            lessons={lessons}
-            courseId={courseId}
-            isMember={isMember}
-            lessonId={lessonId}
-          />
-        }
-      >
-        <LessonContent
-          name={lesson.name}
-          content={lesson.content}
-          lessonId={lesson.id}
-          userId={userId}
-        >
-          {lesson.users.length !== 0 && (
-            <UpdateProgressBtn
-              progress={lesson.users[0].progress}
-              lessonId={lessonId}
-              nextLessonId={nextLessonId}
+    <Layout className="max-w-[90%]">
+      <div className="h-fit">
+        <SideBarWrapper
+          sidebarContent={
+            <LessonList
+              lessons={lessons}
               courseId={courseId}
+              isMember={isMember}
+              lessonId={lessonId}
             />
-          )}
-        </LessonContent>
-      </SideBarWrapper>
+          }
+        >
+          <LessonContent
+            name={lesson.name}
+            content={lesson.content}
+            lessonId={lesson.id}
+            userId={userId}
+          >
+            {lesson.users.length !== 0 && (
+              <UpdateProgressBtn
+                progress={lesson.users[0].progress}
+                lessonId={lessonId}
+                nextLessonId={nextLessonId}
+                courseId={courseId}
+              />
+            )}
+          </LessonContent>
+        </SideBarWrapper>
+      </div>
     </Layout>
   );
 }

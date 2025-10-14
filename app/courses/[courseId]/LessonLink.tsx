@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Progress } from "@prisma/client";
 
-import { Crown, Hourglass, LockIcon } from "lucide-react";
+import { Crown, LockIcon } from "lucide-react";
 import { PropsWithChildren, ReactNode } from "react";
 type LessonLinkProps = {
   isAvailable: boolean;
@@ -28,13 +28,7 @@ export const LessonLink = ({
             "flex justify-center h-10 p-2 w-[20%] rounded-md items-center relative"
           )}
         >
-          {progress === "COMPLETED" ? (
-            <Crown />
-          ) : progress === "IN_PROGRESS" ? (
-            <Hourglass />
-          ) : (
-            <span>{index + 1}</span>
-          )}
+          {progress === "COMPLETED" ? <Crown /> : <span>{index + 1}</span>}
         </span>
         {children}
       </div>
