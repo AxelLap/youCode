@@ -15,22 +15,22 @@ export const SideBarWrapper = ({
 }: PropsWithChildren<SideBarWrapperProps>) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="absolute h-screen w-screen top-0 left-0 z-0">
-      <Button
-        variant={isOpen ? "outline" : "ghost"}
-        className="absolute top-19 left-5"
-        onClick={() => setIsOpen((state) => !state)}
-      >
-        <SidebarLogo />
-      </Button>
-      <div className="w-full h-full flex gap-2">
+    <div className="relative h-full w-full m-2 p-2 flex flex-col gap-2">
+      <div className="w-full h-fit flex items-start gap-2">
         <Sidebar isOpen={isOpen}>{sidebarContent}</Sidebar>
         <div
           className={cn(
             isOpen ? "w-[73%]" : "w-[90%] ",
-            "transition-all delay-150 duration-300 ease-in-out mt-35 mx-auto"
+            "relative transition-all delay-150 duration-300 ease-in-out mx-auto h-fit"
           )}
         >
+          <Button
+            variant={isOpen ? "outline" : "ghost"}
+            className="absolute top-6 left-6 h-5 w-5"
+            onClick={() => setIsOpen((state) => !state)}
+          >
+            <SidebarLogo className="w-full h-full" />
+          </Button>
           {children}
         </div>
       </div>

@@ -1,4 +1,3 @@
-import { Layout } from "@/components/layout/Layout";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Error from "../../../admin/courses/error";
@@ -53,24 +52,24 @@ export default async function LessonPage({
   console.log(`NextLessonId : ${nextLessonId}`);
 
   return (
-    <Layout className="max-w-[90%]">
-      <div className="h-fit">
-        <SideBarWrapper
-          sidebarContent={
-            <LessonList
-              lessons={lessons}
-              courseId={courseId}
-              isMember={isMember}
-              lessonId={lessonId}
-            />
-          }
+    <section className="flex justify-start items-start">
+      <SideBarWrapper
+        sidebarContent={
+          <LessonList
+            lessons={lessons}
+            courseId={courseId}
+            isMember={isMember}
+            lessonId={lessonId}
+          />
+        }
+      >
+        <LessonContent
+          name={lesson.name}
+          content={lesson.content}
+          lessonId={lesson.id}
+          userId={userId}
         >
-          <LessonContent
-            name={lesson.name}
-            content={lesson.content}
-            lessonId={lesson.id}
-            userId={userId}
-          >
+          <>
             {lesson.users.length !== 0 && (
               <UpdateProgressBtn
                 progress={lesson.users[0].progress}
@@ -79,9 +78,9 @@ export default async function LessonPage({
                 courseId={courseId}
               />
             )}
-          </LessonContent>
-        </SideBarWrapper>
-      </div>
-    </Layout>
+          </>
+        </LessonContent>
+      </SideBarWrapper>
+    </section>
   );
 }
