@@ -1,4 +1,5 @@
 import { CourseCard } from "@/components/features/courses/CourseCard";
+import { CourseProgression } from "@/components/features/courses/CourseProgression";
 import { CoursesWrapper } from "@/components/features/courses/CoursesWrapper";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -18,6 +19,11 @@ export default async function CoursesPage() {
     },
     include: {
       creator: true,
+      lessons: {
+        include: {
+          users: true,
+        },
+      },
     },
   });
 
@@ -35,7 +41,12 @@ export default async function CoursesPage() {
                 image={course.image}
                 creator={course.creator.name}
                 creatorImage={course.creator.image}
-              />
+              >
+                <CourseProgression
+                  courseId={course.id}
+                  userId={session.user.id}
+                />
+              </CourseCard>
             ))}
         </CoursesWrapper>
       </LayoutContent>
