@@ -27,7 +27,7 @@ export const CourseProgression = async ({
   const totalLessons = lessons.length;
 
   const completedLessons = lessons.filter(
-    (lesson) => lesson.users[0].progress === "COMPLETED"
+    (lesson) => lesson.users[0]?.progress === "COMPLETED"
   ).length;
 
   const progresPourcent = calculateProgression({
