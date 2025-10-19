@@ -22,6 +22,8 @@ export const NewUsersChart = ({ data }: NewUsersChartProps) => {
     <BarChart
       style={{
         width: "100%",
+        height: "100%",
+
         maxWidth: "700px",
         maxHeight: "70vh",
         aspectRatio: 1.618,

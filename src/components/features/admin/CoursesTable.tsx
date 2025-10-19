@@ -14,12 +14,12 @@ type CoursesTableProps = {
 
 export const CoursesTable = ({ courses }: CoursesTableProps) => {
   return (
-    <Table className="w-3/4 m-auto">
+    <Table className="w-full m-auto">
       <TableHeader>
-        <TableRow>
-          <TableHead>Image</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>state</TableHead>
+        <TableRow className="flex w-full">
+          <TableHead className="text-center w-1/4">Image</TableHead>
+          <TableHead className="text-center w-2/4">Name</TableHead>
+          <TableHead className="text-center w-1/4">state</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

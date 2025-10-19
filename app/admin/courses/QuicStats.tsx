@@ -1,14 +1,15 @@
 import { buttonVariants } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { getLast30DaysStats } from "@/lib/getLastDaysStats";
 import { prisma } from "@/lib/prisma";
 import { cn } from "@/lib/utils";
 import { NewUsersChart } from "./NewUsersChart";
 
-type QuickStatsCountProps = {
+type QuicStatsProps = {
   userId: string;
 };
 
-export const QuickStatsCount = async ({ userId }: QuickStatsCountProps) => {
+export const QuicStats = async ({ userId }: QuicStatsProps) => {
   const courseCount = await prisma.course.count({
     where: {
       creatorId: userId,
@@ -67,7 +68,11 @@ export const QuickStatsCount = async ({ userId }: QuickStatsCountProps) => {
           <span>{courseOnUserData.length}</span>
         </div>
       </div>
-      {chartData && <NewUsersChart data={chartData} />}
+      {chartData && (
+        <Card className="bg-primary flex justify-center items-center p-2 mx-auto my-1 h-1/2 w-full">
+          <NewUsersChart data={chartData} />
+        </Card>
+      )}
     </div>
   );
 };

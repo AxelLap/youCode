@@ -7,7 +7,7 @@ import { Typography } from "@/components/ui/Typography";
 
 import { getRequiredAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { QuickStatsCount } from "./QuicStatsCounts";
+import { QuicStats } from "./QuicStats";
 
 export default async function adminCoursesPage() {
   const session = await getRequiredAuthSession();
@@ -34,7 +34,7 @@ export default async function adminCoursesPage() {
           </CardHeader>
 
           <CardContent>
-            {session && <QuickStatsCount userId={session.user.id} />}
+            {session && <QuicStats userId={session.user.id} />}
           </CardContent>
         </Card>
         <div className="w-[55%] flex flex-col gap-2">
