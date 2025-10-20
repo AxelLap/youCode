@@ -13,6 +13,9 @@ export default async function ExplorerPage({
   const page = Number(searchParams.page ?? 0);
 
   const courses = await prisma.course.findMany({
+    where: {
+      state: "PUBLISHED",
+    },
     take: 9,
     skip: Math.max(0, page * 9),
     select: {
@@ -22,6 +25,8 @@ export default async function ExplorerPage({
       creator: true,
     },
   });
+
+  console.log(courses);
 
   const entries = await prisma.course.count();
 

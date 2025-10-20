@@ -11,6 +11,7 @@ export default async function CoursesPage() {
 
   const courses = await prisma.course.findMany({
     where: {
+      state: "PUBLISHED",
       users: {
         some: {
           userId: session.user.id,

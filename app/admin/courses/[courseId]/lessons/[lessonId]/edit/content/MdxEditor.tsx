@@ -7,6 +7,7 @@ import { useDebounceFn } from "@/hooks/useDebounceFn";
 import { useState } from "react";
 import { toast } from "sonner";
 import { contentActionUpdate } from "../../../lesson.action";
+import "./mdx-editor.module.css";
 
 const InitializedMDXEditor = dynamic(() => import("./InitializedMDXEditor"), {
   ssr: false, // 🚀 empêche le rendu côté serveur

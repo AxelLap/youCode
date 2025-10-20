@@ -19,6 +19,9 @@ export default async function adminCoursesPage() {
     include: {
       creator: true,
     },
+    orderBy: {
+      createdAt: "asc",
+    },
   });
 
   return (

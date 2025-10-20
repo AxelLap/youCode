@@ -11,6 +11,7 @@ import {
   markdownShortcutPlugin,
   MDXEditor,
   quotePlugin,
+  thematicBreakPlugin,
   toolbarPlugin,
   UndoRedo,
   type MDXEditorProps,
@@ -22,12 +23,18 @@ export default function InitializedMDXEditor({ ...props }: MDXEditorProps) {
     <MDXEditor
       contentEditableClassName="prose dark:prose-invert !text-foreground p-1 rounded-lg bg-background h-fit w-full min-h-[100px]"
       plugins={[
+        thematicBreakPlugin(),
         headingsPlugin(),
         quotePlugin(),
         markdownShortcutPlugin(),
         codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
         codeMirrorPlugin({
-          codeBlockLanguages: { js: "JavaScript", css: "CSS" },
+          codeBlockLanguages: {
+            js: "JavaScript",
+            css: "CSS",
+            txt: "text",
+            tsx: "TypeScript",
+          },
         }),
         toolbarPlugin({
           toolbarContents: () => (
