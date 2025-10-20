@@ -26,9 +26,13 @@ export default async function ExplorerPage({
     },
   });
 
-  console.log(courses);
+  console.log(page);
 
-  const entries = await prisma.course.count();
+  const entries = await prisma.course.count({
+    where: {
+      state: "PUBLISHED",
+    },
+  });
 
   return (
     <Layout className="max-w-[90%] ">
