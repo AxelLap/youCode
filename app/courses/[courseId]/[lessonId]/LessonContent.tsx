@@ -8,6 +8,7 @@ import {
 import { Typography } from "@/components/ui/Typography";
 
 import { PropsWithChildren } from "react";
+import { MdxLessonContent } from "./MdxLessonContent";
 import { updateLessonProgress } from "./user-lesson.action";
 import { getLessonOnUserProgress } from "./user-lesson.query";
 
@@ -46,7 +47,7 @@ export const LessonContent = async ({
         </CardTitle>
       </CardHeader>
       <CardContent className="h-fit p-4 my-2 ">
-        <Typography as={"p"}>{content}</Typography>
+        {content && <MdxLessonContent markdown={content} />}
       </CardContent>
       <CardFooter>{children}</CardFooter>
     </Card>
