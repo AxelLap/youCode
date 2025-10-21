@@ -3,8 +3,10 @@ import { UserAvatar } from "@/components/features/images/UserAvatar";
 import { Layout, LayoutContent } from "@/components/layout/Layout";
 import { Typography } from "@/components/ui/Typography";
 import { Card, CardContent } from "@/components/ui/card";
+import { DialogHeader } from "@/components/ui/dialog";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { DialogTitle } from "@radix-ui/react-dialog";
 import Error from "../../../admin/courses/error";
 import { CourseDialog } from "./CourseDialog";
 
@@ -41,9 +43,17 @@ export default async function CoursePage({
             <div className="flex gap-2 items-center">
               <ImageCourse url={course?.image} />
               <div className="w-[40%] mx-auto flex flex-col items-center gap-4 py-3">
-                <Typography variant={"h3"} as={"h2"} className="text-center">
-                  {course?.name}
-                </Typography>
+                <DialogHeader>
+                  <DialogTitle>
+                    <Typography
+                      variant={"h3"}
+                      as={"span"}
+                      className="text-center"
+                    >
+                      {course?.name}
+                    </Typography>
+                  </DialogTitle>
+                </DialogHeader>
                 <div className="flex gap-2 items-center">
                   <span>by :</span>
                   <UserAvatar imageUrl={course?.creator.image} />

@@ -22,7 +22,9 @@ export const LoggedInBtn = ({ userSession }: LoggedInBtnProps) => {
     >
       <UserAvatar imageUrl={userSession.image} />
 
-      <span>{userSession.name ?? "Utilisateur"}</span>
+      <span className="hidden md:block">
+        {userSession.name ?? "Utilisateur"}
+      </span>
     </div>
   );
 };

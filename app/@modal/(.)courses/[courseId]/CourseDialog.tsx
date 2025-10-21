@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { DialogTitle } from "@radix-ui/react-dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren } from "react";
 
@@ -21,10 +21,7 @@ export const CourseDialog = (props: CourseDialogProps) => {
         router.back();
       }}
     >
-      <DialogHeader>
-        <DialogTitle>Suck my clit</DialogTitle>
-      </DialogHeader>
-      <DialogContent className="max-h-screen w-fit overflow-auto">
+      <DialogContent className="max-h-screen w-[95%] md:w-fit overflow-auto">
         {props.children}
         {pathname && (
           <Button

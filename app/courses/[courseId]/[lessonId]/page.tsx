@@ -52,7 +52,7 @@ export default async function LessonPage({
   console.log(`NextLessonId : ${nextLessonId}`);
 
   return (
-    <section className="flex justify-start items-start">
+    <section className="flex justify-center items-start">
       <SideBarWrapper
         sidebarContent={
           <LessonList
@@ -69,16 +69,14 @@ export default async function LessonPage({
           lessonId={lesson.id}
           userId={userId}
         >
-          <>
-            {lesson.users.length !== 0 && (
-              <UpdateProgressBtn
-                progress={lesson.users[0].progress}
-                lessonId={lessonId}
-                nextLessonId={nextLessonId}
-                courseId={courseId}
-              />
-            )}
-          </>
+          {lesson.users.length !== 0 && (
+            <UpdateProgressBtn
+              progress={lesson.users[0].progress}
+              lessonId={lessonId}
+              nextLessonId={nextLessonId}
+              courseId={courseId}
+            />
+          )}
         </LessonContent>
       </SideBarWrapper>
     </section>

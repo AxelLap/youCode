@@ -12,7 +12,12 @@ export function Header() {
     <header className="bg-background sticky top-0 z-40 w-full border-b px-4">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex gap-6">
-          <Typography variant="h3" as={Link} href="/">
+          <Typography
+            className="hidden md:flex"
+            variant="h3"
+            as={Link}
+            href="/"
+          >
             {SiteConfig.title}
           </Typography>
           <img

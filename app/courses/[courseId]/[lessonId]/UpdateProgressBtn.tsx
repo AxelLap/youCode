@@ -37,7 +37,7 @@ export const UpdateProgressBtn = ({
             toast("lesson marked as in progress");
           }
         }}
-        className="w-fit flex gap-2 h-8 rounded-full"
+        className="w-fit flex gap-2 h-8 rounded-full mx-auto"
       >
         <Crown size={32} className="mr-auto" />
         <span>Mark as in progress</span>

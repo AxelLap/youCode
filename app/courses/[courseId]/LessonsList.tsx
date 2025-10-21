@@ -29,7 +29,7 @@ export const LessonList = ({
   lessonId,
 }: LessonListProps) => {
   return (
-    <Card className="w-full h-[60vh] flex flex-col gap-4 p-3 overflow-scroll">
+    <Card className="w-full h-fit md:h-[60vh] flex flex-col gap-4 p-3 overflow-scroll">
       <CardHeader>
         <Typography as="h3" variant="h3">
           Lessons :

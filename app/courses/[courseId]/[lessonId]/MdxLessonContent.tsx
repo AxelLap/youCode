@@ -8,7 +8,7 @@ type MdxLessonContentProps = {
 // app/page.js
 export const MdxLessonContent = (props: MdxLessonContentProps) => {
   return (
-    <div className="prose w-[70%] m-auto p-2">
+    <div className="prose md:w-[80%] w-[95%] m-auto p-2">
       <MDXRemote
         options={{
           mdxOptions: {
