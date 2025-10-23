@@ -48,8 +48,9 @@ export default async function LessonPage({
   const lesson = lessons.find((l) => l.id === lessonId);
   if (!lesson || (!isMember && lesson.state !== "PUBLIC")) return <Error />;
 
-  const nextLessonId = lessons.find((l) => l.rank > lesson?.rank)?.id;
-  console.log(`NextLessonId : ${nextLessonId}`);
+  const nextLessonIndex = lessons.findIndex((l) => l.id === lesson.id);
+
+  const nextLessonId = lessons[nextLessonIndex + 1]?.id;
 
   return (
     <section className="flex justify-center items-start">

@@ -10,7 +10,7 @@ type UpdateProgressBtnProps = {
   progress: Progress;
   lessonId: string;
   courseId: string;
-  nextLessonId: string | undefined;
+  nextLessonId?: string | undefined;
 };
 
 export const UpdateProgressBtn = ({
